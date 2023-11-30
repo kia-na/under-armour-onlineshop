@@ -11,12 +11,11 @@ function MainSite() {
   const params = useParams();
   return (
     <>
-      <span className="text-blue-500">MainSite</span>
+      {/* <span className="text-blue-500">MainSite</span> */}
+      <Header />
       <div className="flex justify-between mt-5">
         <SideBar />
         <div className="w-3/4 border-4 gap-2 flex flex-col ">
-          <Header />
-
           {params.gender ? (
             <FilteredProducts />
           ) : params.gender === "undefined" ? (
