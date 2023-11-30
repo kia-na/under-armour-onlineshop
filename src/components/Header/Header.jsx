@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-function Header() {
+function Header({ setOpenSideBar }) {
   //on dark mode
   return (
-    <div className="flex  items-center justify-between gap-1 h-20 border-4 px-2 bg-black">
-      {/* <span className="text-blue-500">Header</span> */}
-      <div className="flex gap-6 items-center justify-between ">
-        <span className="text-white cursor-pointer">
+    <div className="flex  items-center justify-between gap-1 h-20 px-2 bg-black md:px-5 lg:px-8 xl:px-10">
+      <div className="flex gap-6 items-center justify-between lg:gap-10">
+        <span
+          className="text-white cursor-pointer"
+          onClick={() => setOpenSideBar((prev) => !prev)}
+        >
           <svg
-            className="w-5 h-5 inline"
+            className="w-5 h-5 inline lg:w-8 lg:h-8"
             xmlns="http://www.w3.org/2000/svg"
             width="512"
             height="512"
@@ -22,7 +24,7 @@ function Header() {
         </span>
         <span>
           <svg
-            className="text-white"
+            className="text-white lg:w-8 lg:h-8"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -35,13 +37,13 @@ function Header() {
           </svg>
         </span>
       </div>
-      <div className="flex gap-5 items-center justify-between">
+      <div className="flex gap-5 items-center justify-between md:gap-8  lg:gap-10">
         <Link
           to="/underarmour/admin-login-form"
           className="underline cursor-pointer"
         >
           <svg
-            className="w-7 h-7 text-white"
+            className="w-7 h-7 text-white lg:w-8 lg:h-8"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -55,7 +57,7 @@ function Header() {
         </Link>
         <Link to="/underarmour/orders" className="underline cursor-pointer">
           <svg
-            className="w-6 h-6 text-white"
+            className="w-6 h-6 text-white lg:w-8 lg:h-8"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -69,7 +71,7 @@ function Header() {
         </Link>
         <Link to="/underarmour/orders" className="underline cursor-pointer">
           <svg
-            className="w-6 h-6 text-red-600 "
+            className="w-6 h-6 text-red-600 lg:w-8 lg:h-8"
             xmlns="http://www.w3.org/2000/svg"
             width="256"
             height="256"
