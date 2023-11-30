@@ -15,7 +15,7 @@ function SideBar({ openSideBar, setOpenSideBar }) {
     <>
       <div
         className={`h-screen text-center bg-gray-200 px-1 flex flex-col gap-6  pt-10   ${
-          openSideBar ? "w-full relative lg:w-1/4" : "absolute left-[-5rem]"
+          openSideBar ? "w-full relative lg:w-1/4" : "absolute left-[-20rem]"
         }`}
       >
         {CATEGORYS.map((category) => (
