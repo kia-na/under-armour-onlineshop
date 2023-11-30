@@ -18,7 +18,7 @@ function App() {
           <Route element={<MainSite />}>
             <Route index element={<ProductsSection />} />
             <Route path="orders" element={<Orders />} />
-            <Route path=":gender" element={<FilteredProducts />} />
+            <Route path=":gender" element={<ProductsSection />} />
           </Route>
 
           <Route path="admin-panel" element={<AdminPanel />}>
