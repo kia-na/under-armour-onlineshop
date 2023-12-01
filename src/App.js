@@ -5,7 +5,7 @@ import MainSite from "./pages/MainSite/MainSite";
 import AdminPanel from "./pages/AdminPanel/AdminPanel";
 import AdminLoginForm from "./pages/Form/AdminLoginForm";
 import Layout from "./pages/Layout/Layout";
-import FilteredProducts from "./FilteredProducts";
+import FilteredProducts from "./components/ProductsSection/FilteredProducts";
 import Orders from "./components/Orders/Orders";
 import Prices from "./components/Prices/Prices";
 import Products from "./components/Product/Products";
