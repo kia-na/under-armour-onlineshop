@@ -5,10 +5,11 @@ import MainSite from "./pages/MainSite/MainSite";
 import AdminPanel from "./pages/AdminPanel/AdminPanel";
 import AdminLoginForm from "./pages/Form/AdminLoginForm";
 import Layout from "./pages/Layout/Layout";
-import FilteredProducts from "./FilteredProducts";
+import FilteredProducts from "./components/ProductsSection/FilteredProducts";
 import Orders from "./components/Orders/Orders";
 import Prices from "./components/Prices/Prices";
 import Products from "./components/Product/Products";
+import Steps from "./components/steps/Steps";
 function App() {
   return (
     <div className="App">
@@ -22,7 +23,8 @@ function App() {
           </Route>
 
           <Route path="admin-panel" element={<AdminPanel />}>
-            <Route index path="orders" element={<Orders />} />
+            <Route index element={<Steps />} />
+            <Route path="orders" element={<Orders />} />
             <Route path="prices" element={<Prices />} />
             <Route path="products" element={<Products />} />
           </Route>

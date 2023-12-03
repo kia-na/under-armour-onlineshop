@@ -5,7 +5,7 @@ import Footer from "../../components/Footer/Footer";
 import SideBar from "../../components/Sidebar/SideBar";
 import { Outlet, useParams } from "react-router-dom";
 import { useState } from "react";
-import FilteredProducts from "../../FilteredProducts";
+import FilteredProducts from "../../components/ProductsSection/FilteredProducts";
 
 function MainSite() {
   //PARAMS

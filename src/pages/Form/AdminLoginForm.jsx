@@ -3,8 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 function AdminLoginForm() {
   const Navigate = useNavigate();
   // console.log(Navigate());
+
+  // async function checkAuth() {
+  //   const data = await fetch("http://localhost:8000/api/auth/login");
+  //   const dataA = (await data).json();
+  //   console.log(dataA);
+  // }
   return (
-    <div className=" bg-gray-300 h-screen flex items-start pt-20 justify-center ">
+    <div className=" bg-gray-300 h-screen flex items-start pt-32 justify-center ">
       <div className="relative w-5/6 h-2/5 sm:h-3/5 lg:w-3/5 bg-black flex flex-col md:flex-row shadow-form ">
         <Link
           to="/"
@@ -68,13 +74,13 @@ function AdminLoginForm() {
             />
           </label>
           <button className="text-[8px] mt-2 py-1 px-2 sm:text-lg sm:mt-5 sm:px-4 sm:py-3 tracking-[.2rem] cursor-pointer bg-gray-400 md:py-3 md:px-6  md:mt-10">
-            - LOGIN -
+            <Link to="/underarmour/admin-panel"> - LOGIN -</Link>
           </button>
         </div>
       </div>
       <span className="absolute text-[8px] sm:text-sm bottom-5 tracking-[.5rem] border-black border-b-2 px-2">
         <span className="text-[15px] sm:text-[1.4rem]  text-gray-700">
-          ADMIN{" "}
+          ADMIN
         </span>
         &#160;LOGIN &#160;FORM
       </span>
