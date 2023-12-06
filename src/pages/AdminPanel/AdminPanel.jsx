@@ -36,7 +36,7 @@ function AdminPanel() {
           </svg>
         </span>
       </div>
-      <div className="p-5 text-[.7rem] sm:text-sm h-[1rem] font-bold text-secondary bg-primary w-full h-1/10 rounded-xl md:text-lg md:rounded-[1rem] md:p-7 text-xl shadow-form text-gray-200 gap-4 flex justify-around items-center">
+      <div className="p-5 text-[.8rem] sm:text-[1rem] h-[1rem] font-bold text-secondary bg-primary w-full h-1/10 rounded-xl md:text-lg md:rounded-[1rem] md:p-7 text-xl shadow-form text-gray-200 gap-4 flex justify-around items-center">
         <NavLink to="orders" className="cursor-pointer">
           Orders
         </NavLink>
