@@ -14,8 +14,9 @@ function AdminLoginForm() {
       <div className="relative w-5/6 h-2/5 sm:h-3/5 lg:w-3/5 bg-primary flex flex-col md:flex-row shadow-form ">
         <Link
           to="/"
-          className="absolute z-10 text-primary -top-8 flex  cursor-pointer gap-1  left-0"
+          className="absolute font-bold z-10 text-primary -top-8 flex  cursor-pointer gap-1  left-0"
         >
+          Home
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -27,7 +28,6 @@ function AdminLoginForm() {
               d="m4 10l-.707.707L2.586 10l.707-.707L4 10Zm17 8a1 1 0 1 1-2 0h2ZM8.293 15.707l-5-5l1.414-1.414l5 5l-1.414 1.414Zm-5-6.414l5-5l1.414 1.414l-5 5l-1.414-1.414ZM4 9h10v2H4V9Zm17 7v2h-2v-2h2Zm-7-7a7 7 0 0 1 7 7h-2a5 5 0 0 0-5-5V9Z"
             />
           </svg>
-          Back To Home
         </Link>
         <div className="md:w-2/5 h-2/5 flex flex-col items-center justify-center p-2 md:h-full">
           <svg
@@ -57,7 +57,7 @@ function AdminLoginForm() {
             <input
               id="userName"
               type="text"
-              className="w-full bg-inherit border-b-2 border-b-gray-800 text-tertiary-text outline-none py-1"
+              className="w-full bg-tertiary border-b-2 border-b-gray-800 text-tertiary-text outline-none py-1"
             />
           </label>
           <label
@@ -70,7 +70,7 @@ function AdminLoginForm() {
             <input
               id="password"
               type="password"
-              className=" w-full  bg-inherit border-b-2 border-b-gray-800 text-gray-400 outline-none py-1"
+              className=" w-full bg-tertiary border-b-2  text-tertiary-text outline-none py-1"
             />
           </label>
           <button className="text-[8px] mt-2 py-1 px-2 sm:text-lg sm:mt-5 sm:px-4 sm:py-3 tracking-[.2rem] cursor-pointer bg-tertiary-text md:py-3 md:px-6  md:mt-10">

@@ -1,29 +1,34 @@
 import React from "react";
+// import { useParams } from "react-router-dom";
 import { Link, NavLink, Outlet } from "react-router-dom";
 function AdminPanel() {
+  // const { data } = useParams();
+  // console.log(data);
   return (
-    <div className=" h-screen  p-5 flex flex-col justify-start items-center ">
+    <div className="h-screen p-5 flex flex-col justify-start items-center bg-light-bg">
       <div className=" flex justify-between items-center p-2 w-full">
         <span className="h-[1rem] font-bold flex items-center justify-between w-full gap-2">
           <Link
             to="/"
             className=" text-xs z-10 text-black  flex items-center  cursor-pointer gap-1  "
           >
-            <svg
-              className="text-lg lg:w-9 lg:h-9"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-            >
-              <path
-                fill="currentColor"
-                d="m4 10l-.707.707L2.586 10l.707-.707L4 10Zm17 8a1 1 0 1 1-2 0h2ZM8.293 15.707l-5-5l1.414-1.414l5 5l-1.414 1.414Zm-5-6.414l5-5l1.414 1.414l-5 5l-1.414-1.414ZM4 9h10v2H4V9Zm17 7v2h-2v-2h2Zm-7-7a7 7 0 0 1 7 7h-2a5 5 0 0 0-5-5V9Z"
-              />
-            </svg>
+            <span className="sm:text-lg md:tex-xl ml-1 md:ml-2 lg:ml-3 flex justify-between items-center gap-1 ">
+              Home
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="currentColor"
+                  d="m4 10l-.707.707L2.586 10l.707-.707L4 10Zm17 8a1 1 0 1 1-2 0h2ZM8.293 15.707l-5-5l1.414-1.414l5 5l-1.414 1.414Zm-5-6.414l5-5l1.414 1.414l-5 5l-1.414-1.414ZM4 9h10v2H4V9Zm17 7v2h-2v-2h2Zm-7-7a7 7 0 0 1 7 7h-2a5 5 0 0 0-5-5V9Z"
+                />
+              </svg>
+            </span>
           </Link>
           <svg
-            className="text-black w-8 h-8 md:w-15 md:h-15 md:h-32"
+            className="text-black w-6 h-6 sm:w-8 sm:h-8 md:w-15 md:h-15 md:h-32 md:tex-xl mr-1 md:mr-2 lg:mr-3 "
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -36,14 +41,14 @@ function AdminPanel() {
           </svg>
         </span>
       </div>
-      <div className="p-5 text-[.8rem] sm:text-[1rem] h-[1rem] font-bold text-secondary bg-primary w-full h-1/10 rounded-xl md:text-lg md:rounded-[1rem] md:p-7 text-xl shadow-form text-gray-200 gap-4 flex justify-around items-center">
-        <NavLink to="orders" className="cursor-pointer">
+      <div className="p-5 sm:mt-2 md:mt-3 text-[.8rem] sm:text-[1rem] sm:p-7 h-[1rem] font-bold text-secondary bg-primary w-full h-1/10 rounded-xl md:text-xl md:rounded-[1rem] md:p-9 shadow-form-sm md:shadow-form text-gray-200 gap-4 flex justify-around items-center">
+        <NavLink to="orders" className={`cursor-pointer `}>
           Orders
         </NavLink>
-        <NavLink to="prices" className="cursor-pointer">
+        <NavLink to="prices" className={`cursor-pointer `}>
           Prices
         </NavLink>
-        <NavLink to="products" className="cursor-pointer">
+        <NavLink to="products" className={`cursor-pointer `}>
           Products
         </NavLink>
       </div>
