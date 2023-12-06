@@ -2,7 +2,7 @@ import React from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 function AdminPanel() {
   return (
-    <div className=" h-screen p-5 flex flex-col justify-start items-center ">
+    <div className=" h-screen  p-5 flex flex-col justify-start items-center ">
       <div className=" flex justify-between items-center p-2 w-full">
         <span className="h-[1rem] font-bold flex items-center justify-between w-full gap-2">
           <Link
@@ -36,7 +36,7 @@ function AdminPanel() {
           </svg>
         </span>
       </div>
-      <div className="p-5 font-bold bg-black w-full h-1/10 rounded-xl md:rounded-[1rem] md:p-7 text-xl shadow-form text-gray-200 gap-4 flex justify-around items-center">
+      <div className="p-5 text-[.7rem] sm:text-sm h-[1rem] font-bold text-secondary bg-primary w-full h-1/10 rounded-xl md:text-lg md:rounded-[1rem] md:p-7 text-xl shadow-form text-gray-200 gap-4 flex justify-around items-center">
         <NavLink to="orders" className="cursor-pointer">
           Orders
         </NavLink>

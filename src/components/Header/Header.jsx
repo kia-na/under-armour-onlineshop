@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 function Header({ setOpenSideBar }) {
   //on dark mode
   return (
-    <div className="flex  items-center justify-between gap-1 h-20 px-2 bg-black md:px-5 lg:px-8 xl:px-10">
+    <div className="flex items-center justify-between gap-1 h-20 px-2 bg-primary md:px-5 lg:px-8 xl:px-10">
       <div className="flex gap-6 items-center justify-between lg:gap-10">
         <span
-          className="text-white cursor-pointer"
+          className="text-secondary cursor-pointer"
           onClick={() => setOpenSideBar((prev) => !prev)}
         >
           <svg
@@ -24,7 +24,7 @@ function Header({ setOpenSideBar }) {
         </span>
         <span>
           <svg
-            className="text-white lg:w-8 lg:h-8"
+            className="text-secondary lg:w-8 lg:h-8"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -43,7 +43,7 @@ function Header({ setOpenSideBar }) {
           className="underline cursor-pointer"
         >
           <svg
-            className="w-7 h-7 text-white lg:w-8 lg:h-8"
+            className="w-7 h-7 text-secondary lg:w-8 lg:h-8"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -57,7 +57,7 @@ function Header({ setOpenSideBar }) {
         </Link>
         <Link to="/underarmour/orders" className="underline cursor-pointer">
           <svg
-            className="w-6 h-6 text-white lg:w-8 lg:h-8"
+            className="w-6 h-6 text-secondary lg:w-8 lg:h-8"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -71,7 +71,7 @@ function Header({ setOpenSideBar }) {
         </Link>
         <Link to="/underarmour/orders" className="underline cursor-pointer">
           <svg
-            className="w-6 h-6 text-red-600 lg:w-8 lg:h-8"
+            className="w-6 h-6 lg:w-8 lg:h-8"
             xmlns="http://www.w3.org/2000/svg"
             width="256"
             height="256"

@@ -19,7 +19,7 @@ function MainSite() {
   return (
     <div className="relative">
       <Header setOpenSideBar={setOpenSideBar} />
-      <div className={`flex justify-start bg-red-300`}>
+      <div className={`flex justify-start`}>
         <SideBar openSideBar={openSideBar} setOpenSideBar={setOpenSideBar} />
         <div
           className={`w-3/4 gap-2 flex flex-col items-right justify-start  ${

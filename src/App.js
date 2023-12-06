@@ -23,7 +23,7 @@ function App() {
           </Route>
 
           <Route path="admin-panel" element={<AdminPanel />}>
-            <Route index element={<Steps />} />
+            <Route index element={<Products />} />
             <Route path="orders" element={<Orders />} />
             <Route path="prices" element={<Prices />} />
             <Route path="products" element={<Products />} />
