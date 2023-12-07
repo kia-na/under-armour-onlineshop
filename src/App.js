@@ -10,6 +10,8 @@ import Orders from "./components/Orders/Orders";
 import Prices from "./components/Prices/Prices";
 import Products from "./components/Product/Products";
 import Steps from "./components/steps/Steps";
+import Cart from "./components/Cart/Cart";
+import Favorites from "./components/Favorites/Favorites";
 function App() {
   return (
     <div className="App">
@@ -18,12 +20,13 @@ function App() {
         <Route path="/underarmour" element={<Layout />}>
           <Route element={<MainSite />}>
             <Route index element={<ProductsSection />} />
-            <Route path="orders" element={<Orders />} />
+            <Route path="orders" element={<Cart />} />
+            <Route path="favorites" element={<Favorites />} />
             <Route path=":gender" element={<ProductsSection />} />
           </Route>
 
           <Route path="admin-panel" element={<AdminPanel />}>
-            <Route index element={<Products />} />
+            <Route index element={<Orders />} />
             <Route path="orders" element={<Orders />} />
             <Route path="prices" element={<Prices />} />
             <Route path="products" element={<Products />} />

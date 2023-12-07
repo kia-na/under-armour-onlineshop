@@ -6,7 +6,7 @@ function ProductsSection({ openSideBar }) {
   // console.log(params.gender);
   return (
     <div className={`w-full  h-20 flex flex-col items-start justify-start `}>
-      <div className=" text-blue-500">ProductsSection</div>
+      {/* <div className="">ProductsSection</div> */}
       <div>all ptoducts</div>
     </div>
   );

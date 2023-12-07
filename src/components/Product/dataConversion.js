@@ -7,10 +7,12 @@ const category = {
 };
 
 const subCategory = {
+  //men
   "657084a1fa7d81b2c81bb661": "Training",
   "657084e6fa7d81b2c81bb665": "Running",
-  "65707763d9fb65576da8e0c7": "Hiking",
+  "657084fefa7d81b2c81bb669": "Hiking",
   "6570854cfa7d81b2c81bb671": "Basketball",
+  //men
 };
 
 export { category, subCategory };

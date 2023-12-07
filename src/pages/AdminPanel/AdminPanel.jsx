@@ -6,7 +6,7 @@ function AdminPanel() {
   // console.log(data);
   return (
     <div className="h-screen p-5 flex flex-col justify-start items-center bg-light-bg">
-      <div className=" flex justify-between items-center p-2 w-full">
+      <div className=" flex justify-between items-center p-2 w-5/6">
         <span className="h-[1rem] font-bold flex items-center justify-between w-full gap-2">
           <Link
             to="/"
@@ -41,7 +41,7 @@ function AdminPanel() {
           </svg>
         </span>
       </div>
-      <div className="p-5 sm:mt-2 md:mt-3 text-[.8rem] sm:text-[1rem] sm:p-7 h-[1rem] font-bold text-secondary bg-primary w-full h-1/10 rounded-xl md:text-xl md:rounded-[1rem] md:p-9 shadow-form-sm md:shadow-form text-gray-200 gap-4 flex justify-around items-center">
+      <div className="p-5 sm:mt-2 md:mt-3 text-[.8rem] sm:text-[1rem] sm:p-7 h-[1rem] font-bold text-secondary bg-primary w-full lg:w-11/12 h-1/10 rounded-xl md:text-xl md:rounded-[1rem] md:p-9 shadow-form-sm md:shadow-form text-gray-200 gap-4 flex justify-around items-center">
         <NavLink to="orders" className={`cursor-pointer `}>
           Orders
         </NavLink>

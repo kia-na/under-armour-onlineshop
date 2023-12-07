@@ -19,6 +19,7 @@ module.exports = {
       "tertiary-text": " rgb(156 163 175)",
       "light-bg": "#f0f0f0",
       accent: "#fde047",
+      red: "#b91c1c",
     },
   },
   plugins: [],

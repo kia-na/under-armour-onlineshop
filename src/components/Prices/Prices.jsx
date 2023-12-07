@@ -56,7 +56,7 @@ function Prices() {
           <tbody>
             {serverData.map((product) => (
               <tr
-                className="border-b dark:border-neutral-500"
+                className="border-b dark:border-neutral-500 "
                 key={product._id}
               >
                 <td className="whitespace-nowrap px-6 py-5">{product.name}</td>
@@ -76,7 +76,7 @@ function Prices() {
                     type="number"
                     placeholder={`${product.quantity}`}
                     defaultValue={product.quantity}
-                    className="bg-light-bg outline-tertiary-text py-1 px-2  text-center"
+                    className="bg-light-bg outline-tertiary-text py-1 px-2 text-center "
                   />
                 </td>
               </tr>
