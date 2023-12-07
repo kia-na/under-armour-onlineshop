@@ -10,7 +10,6 @@ const CATEGORYS = [
   { URL: "girls", title: "GIRLS" },
 ];
 function SideBar({ openSideBar, setOpenSideBar }) {
-  console.log(openSideBar);
   return (
     <>
       <div
@@ -18,11 +17,12 @@ function SideBar({ openSideBar, setOpenSideBar }) {
           openSideBar ? "w-full relative lg:w-1/4" : "absolute left-[-20rem]"
         }`}
       >
-        {CATEGORYS.map((category) => (
+        {CATEGORYS.map((category, index) => (
           <NavLink
             to={`${category.URL}`}
             className="w-full mx-auto text-sm bg-primary cursor-pointer lg:text-left lg:pl-16 py-2 text-secondary md:py-3 md:text-lg "
             onClick={() => setOpenSideBar(false)}
+            key={index}
           >
             {category.title}
           </NavLink>

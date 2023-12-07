@@ -2,22 +2,25 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { category, subCategory } from "./dataConversion";
+import { Pagination } from "flowbite-react";
 
 function Products() {
   const [serverData, setServerData] = useState(null);
   const [pageCount, setPageCount] = useState(null);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const onPageChange = (page) => setCurrentPage(page);
 
   useEffect(() => {
     //GET TABLE PRODUCT
     async function getData() {
       try {
         let response = await axios(
-          `http://localhost:8000/api/products?page=1&limit=5`
+          `http://localhost:8000/api/products?page=${currentPage}&limit=5`
         );
 
         setServerData(response.data.data.products);
-        console.log(serverData);
-        console.log(serverData);
+        // console.log(serverData);
       } catch (err) {
         console.log(err.message);
       }
@@ -27,11 +30,11 @@ function Products() {
     //GET DATA FOR TABLE PAGINATING
     async function getPageCount() {
       let response = await axios(`http://localhost:8000/api/products`);
-      setPageCount(response.data.data.products);
-      console.log(pageCount);
+      setPageCount(response.data.total_pages);
+      console.log(response);
     }
     getPageCount();
-  }, []);
+  }, [currentPage]);
 
   if (!serverData || !pageCount) {
     return null;
@@ -133,14 +136,17 @@ function Products() {
         </table>
       </div>
       <div className="w-full text-xs md:text-lg text-center mt-10">
-        {pageCount.map((page, index) => (
-          <span
-            className="py-2 px-4 rounded-md bg-primary text-secondary mx-1 md:mx-2"
-            key={index}
-          >
-            {++index}
-          </span>
-        ))}
+        <div className="flex overflow-x-auto sm:justify-center ">
+          <Pagination
+            layout="pagination"
+            currentPage={currentPage}
+            totalPages={pageCount}
+            onPageChange={onPageChange}
+            previousLabel="Back"
+            nextLabel="Next"
+            showIcons
+          />
+        </div>
       </div>
     </>
   );

@@ -1,16 +1,24 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
+import { Pagination } from "flowbite-react";
+import { userName } from "../Product/dataConversion";
 
 function Orders() {
   const [serverData, setServerData] = useState(null);
   const [pageCount, setPageCount] = useState(null);
+  const [delivered, setDelivered] = useState(null);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const onPageChange = (page) => setCurrentPage(page);
 
   useEffect(() => {
     //GET TABLE PRODUCT
     async function getData() {
       try {
-        let response = await axios(`http://localhost:8000/api/orders`);
+        let response = await axios(
+          `http://localhost:8000/api/orders?page=${currentPage}&limit=5`
+        );
 
         setServerData(response.data.data.orders);
         // console.log(response);
@@ -18,40 +26,58 @@ function Orders() {
         console.log(err.message);
       }
     }
-    getData();
+    delivered === null && getData();
 
     //GET DATA FOR TABLE PAGINATING
     async function getPageCount() {
-      let response = await axios(`http://localhost:8000/api/orders`);
-      setPageCount(response.data.total_pages);
-      // console.log();
+      try {
+        let response = await axios(`http://localhost:8000/api/orders`);
+        setPageCount(response.data.total_pages);
+        // console.log();
+      } catch (err) {
+        console.log(err.message);
+      }
     }
-    getPageCount();
-  }, []);
+    delivered === null && getPageCount();
 
-  // GET USER NAME BY USER ID
-  async function getUserName(id) {
-    const { data } = await axios(`http://localhost:8000/api/users/${id}`);
-
-    // const res = await userName.json();
-    // console.log(res);
-
-    return data.data.user.firstname, data.data.user.lastname;
-    // console.log(data);
-  }
+    // GET DATA BY CLICK ON INPUTS
+    async function getFilteredData() {
+      const response = await axios(
+        `http://localhost:8000/api/orders?deliveryStatus=${delivered}&page=${currentPage}&limit=5`
+      );
+      console.log(response.data.data.orders);
+      setServerData(response.data.data.orders);
+      setPageCount(response.data.total_pages);
+      console.log("deleveere", delivered);
+    }
+    delivered !== null && getFilteredData();
+  }, [currentPage, delivered]);
 
   if (!serverData || !pageCount) {
     return null;
   }
 
+  console.log("data", serverData);
   return (
     <>
       <div className="text-xs sm:text-md md:text-lg mt-5 md:mt-16 p-3 flex flex-col items-start sm:flex-row sm:gap-10 lg:w-5/6 w-11/12 gap-2">
-        <label className="flex gap-2">
+        <label
+          className="flex gap-2 items-center cursor-pointer"
+          onClick={() => {
+            setDelivered(true);
+            setCurrentPage(1);
+          }}
+        >
           Delivered orders
           <input type="radio" name="orders" value="delivered" />
         </label>
-        <label className="flex gap-2">
+        <label
+          className="flex gap-2 items-center cursor-pointer"
+          onClick={() => {
+            setDelivered(false);
+            setCurrentPage(1);
+          }}
+        >
           Pending orders
           <input type="radio" name="orders" value="pending" />
         </label>
@@ -77,11 +103,11 @@ function Orders() {
           <tbody>
             {serverData.map((product) => (
               <tr
-                className="border-b dark:border-neutral-500"
+                className="border-b dark:border-neutral-500 "
                 key={product._id}
               >
                 <td className="whitespace-nowrap px-6 font-medium">
-                  kiana esmaili
+                  {userName[product.user]}
                 </td>
                 <td className="whitespace-nowrap px-6 py-5">
                   {product.totalPrice}
@@ -110,15 +136,17 @@ function Orders() {
         </table>
       </div>
       <div className="w-full text-xs md:text-lg text-center mt-10">
-        {/* {pageCount.map((page, index) => (
-          <span
-            className="py-2 px-4 rounded-md bg-primary text-secondary mx-1 md:mx-2"
-            key={index}
-          >
-            {++index}
-          </span>
-        ))} */}
-        {serverData.total_pages}
+        <div className="flex overflow-x-auto sm:justify-center ">
+          <Pagination
+            layout="pagination"
+            currentPage={currentPage}
+            totalPages={pageCount}
+            onPageChange={onPageChange}
+            previousLabel="Back"
+            nextLabel="Next"
+            showIcons
+          />
+        </div>
       </div>
     </>
   );
