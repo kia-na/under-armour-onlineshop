@@ -39,7 +39,12 @@ function Products() {
 
   return (
     <>
-      <div className="overflow-x-scroll h-4/6 w-full md:w-11/12 lg:w-5/6 mt-10 md:mt-16">
+      <div className="text-sm text-left w-full  sm:w-11/12 lg:w-5/6 sm:text-lg font-bold cursor-pointer py-2 px-4 mt-4 sm:mb-4 sm:mt-8 md:mt-16 ">
+        <span className="rounded-md border-2 py-1 px-3 hover:text-secondary hover:bg-primary hover:py-2">
+          Add product
+        </span>
+      </div>
+      <div className="overflow-x-scroll h-4/6 w-full md:w-11/12 lg:w-5/6 ">
         <table className="min-w-full text-left text-sm font-light lg:text-lg">
           <thead className="border-b font-medium dark:border-neutral-500">
             <tr>

@@ -38,7 +38,12 @@ function Prices() {
 
   return (
     <>
-      <div className="overflow-x-scroll  w-full md:w-11/12 lg:w-5/6 mt-2 md:mt-16">
+      <div className="text-sm text-left w-full  sm:w-11/12 lg:w-5/6 sm:text-lg font-bold cursor-pointer py-2 px-4 mt-4 sm:mb-4 sm:mt-8 md:mt-16 ">
+        <span className="rounded-md border-2 py-1 px-3 hover:text-secondary hover:bg-primary hover:py-2">
+          Save Changes
+        </span>
+      </div>
+      <div className="overflow-x-scroll  w-full md:w-11/12 lg:w-5/6 ">
         <table className="min-w-full text-left text-sm font-light lg:text-lg">
           <thead className="border-b font-medium dark:border-neutral-500">
             <tr>
@@ -84,9 +89,7 @@ function Prices() {
           </tbody>
         </table>
       </div>
-      <span className="text-xs text-tertiary-text sm:text-md lg:text-lg font-bold  mt-5 cursor-pointer py-2 px-4 transition ease-in-out delay-150 hover:scale-110 ">
-        Save Changes
-      </span>
+
       <div className="w-full text-xs md:text-lg text-center mt-10">
         {pageCount.map((page, index) => (
           <span
