@@ -73,7 +73,7 @@ function Header({ setOpenSideBar }) {
         </Link>
         <Link to="/underarmour/favorites" className="underline cursor-pointer">
           <svg
-            className="w-6 h-6 lg:w-8 lg:h-8 text-red"
+            className="w-6 h-6 lg:w-8 lg:h-8 text-red-700"
             xmlns="http://www.w3.org/2000/svg"
             width="256"
             height="256"

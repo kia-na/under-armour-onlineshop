@@ -30,7 +30,7 @@ function Prices() {
     async function getPageCount() {
       let response = await axios(`http://localhost:8000/api/products`);
       setPageCount(response.data.total_pages);
-      console.log(pageCount);
+      // console.log(pageCount);
     }
     getPageCount();
   }, [currentPage]);

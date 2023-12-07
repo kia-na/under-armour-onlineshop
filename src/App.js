@@ -9,7 +9,6 @@ import FilteredProducts from "./components/ProductsSection/FilteredProducts";
 import Orders from "./components/Orders/Orders";
 import Prices from "./components/Prices/Prices";
 import Products from "./components/Product/Products";
-import Steps from "./components/steps/Steps";
 import Cart from "./components/Cart/Cart";
 import Favorites from "./components/Favorites/Favorites";
 function App() {

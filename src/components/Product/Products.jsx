@@ -31,7 +31,7 @@ function Products() {
     async function getPageCount() {
       let response = await axios(`http://localhost:8000/api/products`);
       setPageCount(response.data.total_pages);
-      console.log(response);
+      // console.log(response);
     }
     getPageCount();
   }, [currentPage]);
