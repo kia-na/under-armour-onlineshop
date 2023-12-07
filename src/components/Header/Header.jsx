@@ -42,7 +42,7 @@ function Header({ setOpenSideBar }) {
       <div className="flex gap-5 items-center justify-between md:gap-8  lg:gap-10">
         <Link
           to="/underarmour/admin-login-form"
-          className="underline cursor-pointer"
+          className="underline cursor-pointer "
         >
           <svg
             className="w-7 h-7 text-secondary lg:w-8 lg:h-8"

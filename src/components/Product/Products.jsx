@@ -17,6 +17,7 @@ function Products() {
 
         setServerData(response.data.data.products);
         console.log(serverData);
+        console.log(serverData);
       } catch (err) {
         console.log(err.message);
       }
@@ -66,7 +67,11 @@ function Products() {
                 key={product._id}
               >
                 <td className="whitespace-nowrap px-6 font-medium">
-                  <img src="/shoe.webp" alt="product-pic" className="w-20" />
+                  <img
+                    src={`http://localhost:8000/images/products/images/${product.images[2]}`}
+                    alt="product-pic"
+                    className="w-20"
+                  />
                 </td>
                 <td className="whitespace-nowrap px-6 py-5">{product.name}</td>
                 <td className="whitespace-nowrap px-6 py-5">
