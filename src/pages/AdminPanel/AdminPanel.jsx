@@ -40,26 +40,13 @@ function AdminPanel() {
         </span>
       </div>
       <div className="p-5 sm:mt-2 md:mt-3 text-[.8rem] sm:text-[1rem] sm:p-7 h-[1rem] font-bold text-secondary bg-primary w-full lg:w-11/12 h-1/10 rounded-xl md:text-xl md:rounded-[1rem] md:p-9 shadow-form-sm md:shadow-form text-gray-200 gap-4 flex justify-around items-center">
-        <NavLink
-          onClick={handleActive}
-          to="orders"
-          className={`cursor-pointer `}
-        >
+        <NavLink to="orders" className={`cursor-pointer `}>
           Orders
         </NavLink>
-        <NavLink
-          on
-          onClick={handleActive}
-          to="prices"
-          className={`cursor-pointer `}
-        >
+        <NavLink to="prices" className={`cursor-pointer `}>
           Prices
         </NavLink>
-        <NavLink
-          onClick={handleActive}
-          to="products"
-          className={`cursor-pointer `}
-        >
+        <NavLink to="products" className={`cursor-pointer `}>
           Products
         </NavLink>
       </div>
