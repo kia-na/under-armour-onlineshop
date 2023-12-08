@@ -80,7 +80,7 @@ function Orders() {
           <input type="radio" name="orders" value="pending" />
         </label>
       </div>
-      <div className="overflow-x-scroll h-4/6 w-full md:w-11/12 lg:w-5/6">
+      <div className="overflow-x-scroll h-3/6 w-full md:w-11/12 lg:w-5/6">
         <table className="min-w-full text-left text-sm font-light lg:text-lg">
           <thead className="border-b font-medium dark:border-neutral-500">
             <tr>
