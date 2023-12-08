@@ -9,6 +9,7 @@ function Orders() {
   const [pageCount, setPageCount] = useState(null);
   const [delivered, setDelivered] = useState(null);
 
+  // PAGINATING
   const [currentPage, setCurrentPage] = useState(1);
   const onPageChange = (page) => setCurrentPage(page);
 
@@ -33,7 +34,6 @@ function Orders() {
       try {
         let response = await axios(`http://localhost:8000/api/orders`);
         setPageCount(response.data.total_pages);
-        // console.log();
       } catch (err) {
         console.log(err.message);
       }
@@ -45,10 +45,9 @@ function Orders() {
       const response = await axios(
         `http://localhost:8000/api/orders?deliveryStatus=${delivered}&page=${currentPage}&limit=5`
       );
-      console.log(response.data.data.orders);
+      // console.log(response.data.data.orders);
       setServerData(response.data.data.orders);
       setPageCount(response.data.total_pages);
-      // console.log(delivered);
     }
     delivered !== null && getFilteredData();
   }, [currentPage, delivered]);
@@ -57,7 +56,6 @@ function Orders() {
     return null;
   }
 
-  // console.log("data", serverData);
   return (
     <>
       <div className="text-xs sm:text-md md:text-lg mt-5 md:mt-16 p-3 flex flex-col items-start sm:flex-row sm:gap-10 lg:w-5/6 w-11/12 gap-2">

@@ -7,7 +7,7 @@ import { Outlet, useParams } from "react-router-dom";
 import { useState } from "react";
 import FilteredProducts from "../../components/ProductsSection/FilteredProducts";
 
-function MainSite() {
+function Home() {
   //PARAMS
   const params = useParams();
   //PARAMS
@@ -40,4 +40,4 @@ function MainSite() {
   );
 }
 
-export default MainSite;
+export default Home;

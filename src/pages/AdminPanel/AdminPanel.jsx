@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
+import AppRoutes from "../../router/routes";
 
 function AdminPanel() {
   const [active, setActive] = useState();
@@ -8,7 +9,7 @@ function AdminPanel() {
       <div className=" flex justify-between items-center p-2 w-5/6">
         <span className="h-[1rem] font-bold flex items-center justify-between w-full gap-2">
           <Link
-            to="/"
+            to={AppRoutes.HOME}
             className=" text-xs z-10 text-black  flex items-center  cursor-pointer gap-1  "
           >
             <span className="sm:text-lg md:tex-xl ml-1 md:ml-2 lg:ml-3 flex justify-between items-center gap-1 ">
@@ -42,7 +43,7 @@ function AdminPanel() {
       </div>
       <div className="p-5 sm:mt-2 md:mt-3 text-[.8rem] sm:text-[1rem] sm:p-7 h-[1rem] font-bold text-secondary bg-primary w-full lg:w-11/12 h-1/10 rounded-xl md:text-xl md:rounded-[1rem] md:p-9 shadow-form-sm md:shadow-form gap-4 flex justify-around items-center">
         <NavLink
-          to="orders"
+          to={`${AppRoutes.HOME}${AppRoutes.ADMINPANEL}${AppRoutes.ORDERS}`}
           className={`cursor-pointer ${
             active === "orders" ? "border-b-2" : ""
           }`}
@@ -50,7 +51,7 @@ function AdminPanel() {
           Orders
         </NavLink>
         <NavLink
-          to="prices"
+          to={`${AppRoutes.HOME}${AppRoutes.ADMINPANEL}${AppRoutes.PRICES}`}
           className={`cursor-pointer ${
             active === "Prices" ? "border-b-2" : ""
           }`}
@@ -58,7 +59,7 @@ function AdminPanel() {
           Prices / Inventory
         </NavLink>
         <NavLink
-          to="products"
+          to={`${AppRoutes.HOME}${AppRoutes.ADMINPANEL}${AppRoutes.PRODUCTS}`}
           className={`cursor-pointer ${
             active === "Products" ? "border-b-2" : ""
           }`}

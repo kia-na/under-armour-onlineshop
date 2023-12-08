@@ -8,6 +8,7 @@ function Products() {
   const [serverData, setServerData] = useState(null);
   const [pageCount, setPageCount] = useState(null);
 
+  // PAGINATING
   const [currentPage, setCurrentPage] = useState(1);
   const onPageChange = (page) => setCurrentPage(page);
 
