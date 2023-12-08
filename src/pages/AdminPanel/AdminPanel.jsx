@@ -3,7 +3,7 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import AppRoutes from "../../router/routes";
 
 function AdminPanel() {
-  const [active, setActive] = useState();
+  const [active, setActive] = useState("orders");
   return (
     <div className="h-screen p-5 flex flex-col justify-start items-center bg-light-bg">
       <div className=" flex justify-between items-center p-2 w-5/6">
@@ -44,6 +44,7 @@ function AdminPanel() {
       <div className="p-5 sm:mt-2 md:mt-3 text-[.8rem] sm:text-[1rem] sm:p-7 h-[1rem] font-bold text-secondary bg-primary w-full lg:w-11/12 h-1/10 rounded-xl md:text-xl md:rounded-[1rem] md:p-9 shadow-form-sm md:shadow-form gap-4 flex justify-around items-center">
         <NavLink
           to={`${AppRoutes.HOME}${AppRoutes.ADMINPANEL}${AppRoutes.ORDERS}`}
+          onClick={() => setActive("orders")}
           className={`cursor-pointer ${
             active === "orders" ? "border-b-2" : ""
           }`}
@@ -52,14 +53,16 @@ function AdminPanel() {
         </NavLink>
         <NavLink
           to={`${AppRoutes.HOME}${AppRoutes.ADMINPANEL}${AppRoutes.PRICES}`}
+          onClick={() => setActive("Prices")}
           className={`cursor-pointer ${
             active === "Prices" ? "border-b-2" : ""
           }`}
         >
-          Prices / Inventory
+          Inventory
         </NavLink>
         <NavLink
           to={`${AppRoutes.HOME}${AppRoutes.ADMINPANEL}${AppRoutes.PRODUCTS}`}
+          onClick={() => setActive("Products")}
           className={`cursor-pointer ${
             active === "Products" ? "border-b-2" : ""
           }`}
