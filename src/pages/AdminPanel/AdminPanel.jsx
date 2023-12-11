@@ -1,9 +1,16 @@
-import React, { useState } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import AppRoutes from "../../router/routes";
-
+import { Navigate } from "react-router-dom";
 function AdminPanel() {
   const [active, setActive] = useState("orders");
+  const navigate = useNavigate();
+
+  //CASE REFRESH THE PAGE BACK TO DEFAULT RENDER SECTION (ORDERS)
+  useEffect(() => {
+    navigate(`${AppRoutes.HOME}${AppRoutes.ADMINPANEL}`);
+  }, []);
+
   return (
     <div className="h-screen p-5 flex flex-col justify-start items-center bg-light-bg sm:pt-10 lg:pt-16">
       <div className=" flex justify-between items-center p-2 w-5/6">

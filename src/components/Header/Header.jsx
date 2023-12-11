@@ -39,7 +39,7 @@ function Header({ setOpenSideBar }) {
           </Link>
         </span>
       </div>
-      <div className="flex gap-5 items-center justify-between md:gap-8  lg:gap-10">
+      <div className="flex gap-5 items-center justify-between md:gap-8 lg:gap-10">
         <Link
           to={`${AppRoutes.HOME}${AppRoutes.LOGINFORM}`}
           className="underline cursor-pointer "

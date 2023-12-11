@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
-import { Pagination } from "flowbite-react";
+import { Pagination, Button, Modal } from "flowbite-react";
 import { userName } from "../Product/dataConversion";
 
 function Orders() {
   const [serverData, setServerData] = useState(null);
   const [pageCount, setPageCount] = useState(null);
   const [delivered, setDelivered] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [modalData, setModalData] = useState("");
 
   // PAGINATING
   const [currentPage, setCurrentPage] = useState(1);
@@ -50,7 +52,33 @@ function Orders() {
       setPageCount(response.data.total_pages);
     }
     delivered !== null && getFilteredData();
-  }, [currentPage, delivered]);
+  }, [currentPage, delivered, openModal]);
+
+  //HANDLE ESC KEY PRESS FOR CLOSING MODAl
+  function handleKeyPress(e) {
+    if (e.key === "Escape") {
+      setOpenModal(false);
+    }
+  }
+
+  //HANDLE GET DATA TO FILL OUT MODAL
+  function handleShowModal(orderId) {
+    setOpenModal(true);
+    axios(`http://localhost:8000/api/orders/${orderId}`).then((res) => {
+      setModalData(res.data.data.order);
+    });
+  }
+
+  //CHANGE DELIVERY IN SERVER
+  function handleModalDeliveredBtn() {
+    setOpenModal(false);
+    axios
+      .patch(`http://localhost:8000/api/orders/${modalData._id}`, {
+        deliveryStatus: true,
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err.message));
+  }
 
   if (!serverData || !pageCount) {
     return null;
@@ -99,23 +127,21 @@ function Orders() {
             </tr>
           </thead>
           <tbody>
-            {serverData.map((product) => (
-              <tr
-                className="border-b dark:border-neutral-500 "
-                key={product._id}
-              >
+            {serverData.map((order) => (
+              <tr className="border-b dark:border-neutral-500 " key={order._id}>
                 <td className="whitespace-nowrap px-6 font-medium">
-                  {userName[product.user]}
+                  {userName[order.user]}
                 </td>
                 <td className="whitespace-nowrap px-6 py-5">
-                  {product.totalPrice}
+                  {order.totalPrice}
                 </td>
 
                 <td className="whitespace-nowrap px-6 py-5">
-                  {new Date(product.createdAt).toLocaleDateString("en-us")}
+                  {new Date(order.createdAt).toLocaleDateString("en-us")}
                 </td>
-                <td className="whitespace-nowrap px-6 py-5 text-center">
+                <td className="whitespace-nowrap px-6 py-5 text-center ">
                   <svg
+                    onClick={() => handleShowModal(order._id)}
                     className="inline lg:w-8 lg:h-8 cursor-pointer"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -146,6 +172,67 @@ function Orders() {
           />
         </div>
       </div>
+      {modalData && (
+        <Modal
+          show={openModal}
+          onClose={() => setOpenModal(false)}
+          onKeyDown={handleKeyPress}
+        >
+          <Modal.Header>Check order</Modal.Header>
+          <Modal.Body>
+            <div className="text-xs gap-2 flex flex-col sm:px-16 sm:text-[1rem] sm:gap-5">
+              <div className="flex items-center justify-between">
+                <span>Name:</span>
+                <span className="text-gray-400 w-36 text-center">
+                  {modalData.user.firstname + " " + modalData.user.lastname}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span>Adress:</span>
+                <span className="text-gray-400 w-36 text-center">
+                  {modalData.user.address}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span>Phone number:</span>
+                <span className="text-gray-400 w-36 text-center">
+                  {modalData.user.phoneNumber}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span>Delivery date:</span>
+                <span className="text-gray-400 w-36 text-center">
+                  {new Date(modalData.deliveryDate).toLocaleDateString("en-us")}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span>Ordered date:</span>
+                <span className="text-gray-400 w-36 text-center">
+                  {new Date(modalData.createdAt).toLocaleDateString("en-us")}
+                </span>
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer className="flex justify-center items-center">
+            {/* <Button onClick={() => setOpenModal(false)}>I accept</Button> */}
+            {modalData.deliveryStatus ? (
+              <div className="flex items-center justify-between gap-10">
+                <span>Delivery date:</span>
+                <span className="text-gray-400">
+                  {new Date(modalData.deliveryDate).toLocaleDateString("en-us")}
+                </span>
+              </div>
+            ) : (
+              <Button
+                className="text-black border-2 border-gray-200 hover:text-white hover:bg-black"
+                onClick={handleModalDeliveredBtn}
+              >
+                Delivered
+              </Button>
+            )}
+          </Modal.Footer>
+        </Modal>
+      )}
     </>
   );
 }
