@@ -75,7 +75,7 @@ function Prices() {
                     type="number"
                     placeholder={`${product.price}$`}
                     defaultValue={product.price}
-                    className="bg-transparent	 border-none outline-tertiary-text py-1 px-2 text-center"
+                    className="bg-transparent	 border-none outline-tertiary-text py-1 px-2 text-center focus:bg-white rounded-lg"
                   />
 
                   <span className="font-bold"> </span>

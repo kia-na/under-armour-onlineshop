@@ -3,12 +3,13 @@ import axios from "axios";
 import { useState } from "react";
 import { Pagination, Button, Modal } from "flowbite-react";
 import { userName } from "../Product/dataConversion";
+import OrderModalTable from "../OrderModalTable/OrderTable";
 
 function Orders() {
   const [serverData, setServerData] = useState(null);
   const [pageCount, setPageCount] = useState(null);
   const [delivered, setDelivered] = useState(null);
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(null);
   const [modalData, setModalData] = useState("");
 
   // PAGINATING
@@ -52,6 +53,8 @@ function Orders() {
       setPageCount(response.data.total_pages);
     }
     delivered !== null && getFilteredData();
+
+    console.log("re rendered!!!!!!!!!!!!!!!!");
   }, [currentPage, delivered, openModal]);
 
   //HANDLE ESC KEY PRESS FOR CLOSING MODAl
@@ -66,23 +69,25 @@ function Orders() {
     setOpenModal(true);
     axios(`http://localhost:8000/api/orders/${orderId}`).then((res) => {
       setModalData(res.data.data.order);
+      // console.log(res.data.data.order);
     });
   }
 
   //CHANGE DELIVERY IN SERVER
   function handleModalDeliveredBtn() {
-    setOpenModal(false);
     axios
       .patch(`http://localhost:8000/api/orders/${modalData._id}`, {
         deliveryStatus: true,
       })
       .then((res) => console.log(res))
       .catch((err) => console.log(err.message));
+
+    setOpenModal(false);
   }
 
-  if (!serverData || !pageCount) {
-    return null;
-  }
+  // if (!serverData || !pageCount) {
+  //   return <div>No order found</div>;
+  // }
 
   return (
     <>
@@ -109,69 +114,82 @@ function Orders() {
         </label>
       </div>
       <div className="overflow-x-scroll h-3/6 w-full md:w-11/12 lg:w-5/6">
-        <table className="min-w-full text-left text-sm font-light lg:text-lg">
-          <thead className="border-b font-medium dark:border-neutral-500">
-            <tr>
-              <th scope="col" className="px-6 py-5">
-                Name
-              </th>
-              <th scope="col" className="px-6 py-5">
-                Total price ($)
-              </th>
-              <th scope="col" className="px-6 py-5 w-18">
-                Created date
-              </th>
-              <th scope="col" className="px-6 py-5 w-18 text-center">
-                Check order
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {serverData.map((order) => (
-              <tr className="border-b dark:border-neutral-500 " key={order._id}>
-                <td className="whitespace-nowrap px-6 font-medium">
-                  {userName[order.user]}
-                </td>
-                <td className="whitespace-nowrap px-6 py-5">
-                  {order.totalPrice}
-                </td>
-
-                <td className="whitespace-nowrap px-6 py-5">
-                  {new Date(order.createdAt).toLocaleDateString("en-us")}
-                </td>
-                <td className="whitespace-nowrap px-6 py-5 text-center ">
-                  <svg
-                    onClick={() => handleShowModal(order._id)}
-                    className="inline lg:w-8 lg:h-8 cursor-pointer"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M6 4v4h12V4h2.007c.548 0 .993.445.993.993v16.014a.994.994 0 0 1-.993.993H3.993A.993.993 0 0 1 3 21.007V4.993C3 4.445 3.445 4 3.993 4H6Zm3 13H7v2h2v-2Zm0-3H7v2h2v-2Zm0-3H7v2h2v-2Zm7-9v4H8V2h8Z"
-                    />
-                  </svg>
-                </td>
+        {serverData && pageCount ? (
+          <table className="min-w-full text-left text-sm font-light lg:text-lg">
+            <thead className="border-b font-medium dark:border-neutral-500">
+              <tr>
+                <th scope="col" className="px-6 py-5">
+                  Name
+                </th>
+                <th scope="col" className="px-6 py-5">
+                  Total price ($)
+                </th>
+                <th scope="col" className="px-6 py-5 w-18">
+                  Created date
+                </th>
+                <th scope="col" className="px-6 py-5 w-18 text-center">
+                  Check order
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {serverData.map((order) => (
+                <tr
+                  className="border-b dark:border-neutral-500 "
+                  key={order._id}
+                >
+                  <td className="whitespace-nowrap px-6 font-medium">
+                    {userName[order.user]}
+                  </td>
+                  <td className="min-w-[9rem] whitespace-nowrap px-6 py-5">
+                    {order.totalPrice}
+                  </td>
+
+                  <td className="min-w-[9rem] whitespace-nowrap px-6 py-5">
+                    {new Date(order.createdAt).toLocaleDateString("en-us")}
+                  </td>
+                  <td className="min-w-[9rem] whitespace-nowrap px-6 py-5 text-center ">
+                    <svg
+                      onClick={() => handleShowModal(order._id)}
+                      className="inline lg:w-8 lg:h-8 cursor-pointer"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M6 4v4h12V4h2.007c.548 0 .993.445.993.993v16.014a.994.994 0 0 1-.993.993H3.993A.993.993 0 0 1 3 21.007V4.993C3 4.445 3.445 4 3.993 4H6Zm3 13H7v2h2v-2Zm0-3H7v2h2v-2Zm0-3H7v2h2v-2Zm7-9v4H8V2h8Z"
+                      />
+                    </svg>
+                  </td>
+                </tr>
+              ))}
+              {!serverData && <div>No order found</div>}
+            </tbody>
+          </table>
+        ) : (
+          <div className=" text-center mt-4 text-lg md:text-2xl md:mt-16">
+            No order found!
+          </div>
+        )}
       </div>
-      <div className="w-full text-xs md:text-lg text-center mt-10">
-        <div className="flex overflow-x-auto sm:justify-center ">
-          <Pagination
-            layout="pagination"
-            currentPage={currentPage}
-            totalPages={pageCount}
-            onPageChange={onPageChange}
-            previousLabel="Back"
-            nextLabel="Next"
-            showIcons
-          />
+      {serverData && pageCount ? (
+        <div className="w-full text-xs md:text-lg text-center mt-10">
+          <div className="flex overflow-x-auto sm:justify-center ">
+            <Pagination
+              layout="pagination"
+              currentPage={currentPage}
+              totalPages={pageCount}
+              onPageChange={onPageChange}
+              previousLabel="Back"
+              nextLabel="Next"
+              showIcons
+            />
+          </div>
         </div>
-      </div>
+      ) : null}
+
       {modalData && (
         <Modal
           show={openModal}
@@ -212,6 +230,7 @@ function Orders() {
                 </span>
               </div>
             </div>
+            <OrderModalTable data={modalData.products} />
           </Modal.Body>
           <Modal.Footer className="flex justify-center items-center">
             {/* <Button onClick={() => setOpenModal(false)}>I accept</Button> */}
