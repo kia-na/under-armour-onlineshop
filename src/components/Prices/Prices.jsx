@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import { useState } from "react";
-import { Pagination } from "flowbite-react";
+import { useState, useRef } from "react";
+import { Pagination, Modal } from "flowbite-react";
 
 function Prices() {
   const [serverData, setServerData] = useState(null);
   const [pageCount, setPageCount] = useState(null);
+  const inputRef = useRef(null);
 
   // PAGINATING
   const [currentPage, setCurrentPage] = useState(1);
@@ -75,6 +76,10 @@ function Prices() {
                     type="number"
                     placeholder={`${product.price}$`}
                     defaultValue={product.price}
+                    ref={inputRef}
+                    onBlur={() => {
+                      console.log(inputRef.current.focus());
+                    }}
                     className="bg-transparent	 border-none outline-tertiary-text py-1 px-2 text-center focus:bg-white rounded-lg"
                   />
 
@@ -85,7 +90,7 @@ function Prices() {
                     type="number"
                     placeholder={`${product.quantity}`}
                     defaultValue={product.quantity}
-                    className="bg-transparent	outline-tertiary-text  border-none py-1 px-2 text-center "
+                    className="bg-transparent	outline-tertiary-text  border-none py-1 px-2 text-center focus:bg-white rounded-lg"
                   />
                 </td>
               </tr>

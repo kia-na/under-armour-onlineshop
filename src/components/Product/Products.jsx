@@ -3,10 +3,14 @@ import axios from "axios";
 import { useState } from "react";
 import { category, subCategory } from "./dataConversion";
 import { Pagination } from "flowbite-react";
+import DeleteProductModal from "../ProductManagment/Modal/DeleteProductModal";
 
 function Products() {
   const [serverData, setServerData] = useState(null);
   const [pageCount, setPageCount] = useState(null);
+  //DELETE MODAL
+  const [openModal, setOpenModal] = useState(false);
+  const [deleteItem, setDeleteItem] = useState(null);
 
   // PAGINATING
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,7 +39,13 @@ function Products() {
       // console.log(response);
     }
     getPageCount();
-  }, [currentPage]);
+  }, [currentPage, openModal]);
+
+  //OPEN MODAL
+  function handleOpenModal(productId) {
+    setDeleteItem(productId);
+    setOpenModal(true);
+  }
 
   if (!serverData || !pageCount) {
     return null;
@@ -110,6 +120,8 @@ function Products() {
                 </td>
                 <td className="whitespace-nowrap px-6 py-5 text-center">
                   <svg
+                    id={product._id}
+                    onClick={() => handleOpenModal(product._id)}
                     className="inline lg:w-8 lg:h-8 cursor-pointer"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -149,6 +161,13 @@ function Products() {
           />
         </div>
       </div>
+      {openModal && (
+        <DeleteProductModal
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+          deleteItem={deleteItem}
+        />
+      )}
     </>
   );
 }
