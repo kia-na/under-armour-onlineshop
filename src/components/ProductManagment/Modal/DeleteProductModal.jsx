@@ -40,7 +40,7 @@ function DeleteProductModal({ openModal, setOpenModal, deleteItem }) {
                 Yes, I'm sure
               </Button>
               <Button color="gray" onClick={() => setOpenModal(false)}>
-                No, cancel
+                No, Cancel
               </Button>
             </div>
           </div>

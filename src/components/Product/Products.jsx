@@ -4,6 +4,7 @@ import { useState } from "react";
 import { category, subCategory } from "./dataConversion";
 import { Pagination } from "flowbite-react";
 import DeleteProductModal from "../ProductManagment/Modal/DeleteProductModal";
+import EditProductModal from "../ProductManagment/Modal/EditProductModal";
 
 function Products() {
   const [serverData, setServerData] = useState(null);
@@ -11,6 +12,10 @@ function Products() {
   //DELETE MODAL
   const [openModal, setOpenModal] = useState(false);
   const [deleteItem, setDeleteItem] = useState(null);
+
+  //EDIT MODAL
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [editItem, setEditItem] = useState(null);
 
   // PAGINATING
   const [currentPage, setCurrentPage] = useState(1);
@@ -41,12 +46,17 @@ function Products() {
     getPageCount();
   }, [currentPage, openModal]);
 
-  //OPEN MODAL
+  //OPEN DELETE MODAL
   function handleOpenModal(productId) {
     setDeleteItem(productId);
     setOpenModal(true);
   }
 
+  //OPEN EDIT/ADD MODAL (IF ADD MODE productId = NULL)
+  function handleEditModal(productId) {
+    productId === "undefined" ? setEditItem(null) : setEditItem(productId);
+    setOpenEditModal(true);
+  }
   if (!serverData || !pageCount) {
     return null;
   }
@@ -54,7 +64,10 @@ function Products() {
   return (
     <>
       <div className="text-sm text-left w-full  sm:w-11/12 lg:w-5/6 sm:text-lg font-bold cursor-pointer py-2 px-4 mt-4 sm:mb-4 sm:mt-8 md:mt-16 ">
-        <span className="rounded-md border-2 py-1 px-3 hover:text-secondary hover:bg-primary hover:py-2">
+        <span
+          className="rounded-md border-2 py-1 px-3 hover:text-secondary hover:bg-primary hover:py-2"
+          onClick={() => handleEditModal(null)}
+        >
           Add product
         </span>
       </div>
@@ -100,6 +113,7 @@ function Products() {
                 </td>
                 <td className="whitespace-nowrap px-6 py-5 text-center">
                   <svg
+                    onClick={() => handleEditModal(product._id)}
                     className="inline lg:w-8 lg:h-8 cursor-pointer "
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -120,7 +134,6 @@ function Products() {
                 </td>
                 <td className="whitespace-nowrap px-6 py-5 text-center">
                   <svg
-                    id={product._id}
                     onClick={() => handleOpenModal(product._id)}
                     className="inline lg:w-8 lg:h-8 cursor-pointer"
                     xmlns="http://www.w3.org/2000/svg"
@@ -166,6 +179,13 @@ function Products() {
           openModal={openModal}
           setOpenModal={setOpenModal}
           deleteItem={deleteItem}
+        />
+      )}
+      {openEditModal && (
+        <EditProductModal
+          openModal={setOpenEditModal}
+          setOpenModal={setOpenEditModal}
+          editItem={editItem}
         />
       )}
     </>
