@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
-import { category, subCategory } from "./dataConversion";
+import { categoryArr, subCategoryArr } from "./dataConversion";
 import { Pagination } from "flowbite-react";
 import DeleteProductModal from "../ProductManagment/Modal/DeleteProductModal";
 import EditProductModal from "../ProductManagment/Modal/EditProductModal";
@@ -112,9 +112,9 @@ function Products() {
                 </td>
                 <td className="whitespace-nowrap px-6 py-5">{product.name}</td>
                 <td className="whitespace-nowrap px-6 py-5">
-                  {category[product.category] +
+                  {categoryArr[product.category] +
                     " / " +
-                    subCategory[product.subcategory]}
+                    subCategoryArr[product.category][product.subcategory]}
                 </td>
                 <td className="whitespace-nowrap px-6 py-5 text-center">
                   <svg
