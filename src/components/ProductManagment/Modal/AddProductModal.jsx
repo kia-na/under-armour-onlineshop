@@ -2,7 +2,7 @@ import React from "react";
 import { Modal, Button } from "flowbite-react";
 import axios from "axios";
 
-function EditProductModal({ openModal, setOpenModal, editItem }) {
+function AddProductModal({ openModal, setOpenModal }) {
   //HANDLE ESC KEY PRESS FOR CLOSING MODAl
   function handleKeyPress(e) {
     if (e.key === "Escape") {
@@ -10,14 +10,8 @@ function EditProductModal({ openModal, setOpenModal, editItem }) {
     }
   }
 
-  //EDIT PRODUCT FROM SERVER
-  function handleEdit() {
-    console.log("deleted item?");
-    axios(`http://localhost:8000/api/products/${editItem}`)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-    // setOpenModal(false);
-  }
+  //ADD PRODUCT TO SERVER
+  function addProduct() {}
 
   return (
     <>
@@ -29,7 +23,7 @@ function EditProductModal({ openModal, setOpenModal, editItem }) {
       >
         <Modal.Header>
           <span className="text-[1rem] text-gray-500 md:text-lg">
-            Edit Product
+            Add Product
           </span>
         </Modal.Header>
         <Modal.Body>
@@ -114,8 +108,8 @@ function EditProductModal({ openModal, setOpenModal, editItem }) {
               </div>
             </form>
             <div className="flex justify-center gap-4">
-              <Button className="bg-black" onClick={handleEdit}>
-                Save
+              <Button className="w-[8rem] bg-black" onClick={addProduct}>
+                Add Product
               </Button>
             </div>
           </div>
@@ -124,4 +118,4 @@ function EditProductModal({ openModal, setOpenModal, editItem }) {
     </>
   );
 }
-export default EditProductModal;
+export default AddProductModal;

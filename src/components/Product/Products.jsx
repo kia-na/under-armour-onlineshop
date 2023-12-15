@@ -5,6 +5,7 @@ import { category, subCategory } from "./dataConversion";
 import { Pagination } from "flowbite-react";
 import DeleteProductModal from "../ProductManagment/Modal/DeleteProductModal";
 import EditProductModal from "../ProductManagment/Modal/EditProductModal";
+import AddProductModal from "../ProductManagment/Modal/AddProductModal";
 
 function Products() {
   const [serverData, setServerData] = useState(null);
@@ -16,6 +17,9 @@ function Products() {
   //EDIT MODAL
   const [openEditModal, setOpenEditModal] = useState(false);
   const [editItem, setEditItem] = useState(null);
+
+  //ADD MODAL
+  const [openAddModal, setOpenAddModal] = useState(false);
 
   // PAGINATING
   const [currentPage, setCurrentPage] = useState(1);
@@ -57,6 +61,7 @@ function Products() {
     productId === "undefined" ? setEditItem(null) : setEditItem(productId);
     setOpenEditModal(true);
   }
+
   if (!serverData || !pageCount) {
     return null;
   }
@@ -66,7 +71,7 @@ function Products() {
       <div className="text-sm text-left w-full  sm:w-11/12 lg:w-5/6 sm:text-lg font-bold cursor-pointer py-2 px-4 mt-4 sm:mb-4 sm:mt-8 md:mt-16 ">
         <span
           className="rounded-md border-2 py-1 px-3 hover:text-secondary hover:bg-primary hover:py-2"
-          onClick={() => handleEditModal(null)}
+          onClick={() => setOpenAddModal(true)}
         >
           Add product
         </span>
@@ -186,6 +191,12 @@ function Products() {
           openModal={setOpenEditModal}
           setOpenModal={setOpenEditModal}
           editItem={editItem}
+        />
+      )}
+      {openAddModal && (
+        <AddProductModal
+          openModal={openAddModal}
+          setOpenModal={setOpenAddModal}
         />
       )}
     </>
