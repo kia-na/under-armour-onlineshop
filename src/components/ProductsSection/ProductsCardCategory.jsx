@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 
-function FilteredProducts() {
+function ProductsCardCategory() {
   const params = useParams();
   return (
     <>
@@ -11,4 +11,4 @@ function FilteredProducts() {
   );
 }
 
-export default FilteredProducts;
+export default ProductsCardCategory;

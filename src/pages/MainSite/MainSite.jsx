@@ -1,11 +1,11 @@
 import React from "react";
 import Header from "../../components/Header/Header";
-import ProductsSection from "../../components/ProductsSection/ProductsSection";
+import ProductsSection from "../../components/ProductsSection/ProductsCard";
 import Footer from "../../components/Footer/Footer";
 import SideBar from "../../components/Sidebar/SideBar";
 import { Outlet, useParams } from "react-router-dom";
 
-import FilteredProducts from "../../components/ProductsSection/FilteredProducts";
+import FilteredProducts from "../../components/ProductsSection/ProductsCardCategory";
 
 function MainSite() {
   const params = useParams();

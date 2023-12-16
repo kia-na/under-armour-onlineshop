@@ -9,27 +9,27 @@ const CATEGORYS = [
   {
     URL: "unisex",
     title: "UNISEX",
-    subcategory: ["Basketball", "Training", "Running"],
+    subcategory: ["basketball", "training", "running"],
   },
   {
     URL: "men",
     title: "MEN",
-    subcategory: ["Basketball", "Training", "Running", "Hiking"],
+    subcategory: ["basketball", "training", "running", "hiking"],
   },
   {
     URL: "women",
     title: "WOMEN",
-    subcategory: ["Basketball", "Training", "Running"],
+    subcategory: ["basketball", "training", "running"],
   },
   {
     URL: "boys",
     title: "BOYS",
-    subcategory: ["Basketball", "Training", "Running"],
+    subcategory: ["basketball", "training", "running"],
   },
   {
     URL: "girls",
     title: "GIRLS",
-    subcategory: ["Basketball", "Training", "Running"],
+    subcategory: ["basketball", "training", "running"],
   },
 ];
 // const CATEGORYS = [
@@ -79,10 +79,7 @@ function SideBar({ openSideBar, setOpenSideBar }) {
         <div className="pt-5 px-4 flex flex-col gap-5 lg:px-8 lg:pt-8">
           {CATEGORYS.map((category, index) => (
             <div className="flex flex-col items-center justify-between p-3 ">
-              <div
-                className="flex items-center justify-between w-full cursor-pointer"
-                // onClick={() => setShowSubcategory(category.title)}
-              >
+              <div className="flex items-center justify-between w-full cursor-pointer">
                 <Link
                   to={category.URL}
                   onClick={() => setOpenSideBar(false)}
@@ -124,7 +121,13 @@ function SideBar({ openSideBar, setOpenSideBar }) {
               >
                 {category.subcategory &&
                   category.subcategory.map((sub, index) => (
-                    <span className="cursor-pointer">{sub}</span>
+                    <Link
+                      to={`${category.URL}/${sub}`}
+                      className="cursor-pointer"
+                      onClick={() => setOpenSideBar(false)}
+                    >
+                      {sub}
+                    </Link>
                   ))}
               </div>
             </div>

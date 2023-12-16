@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import ProductsSection from "./components/ProductsSection/ProductsSection";
+import ProductsSection from "./components/ProductsSection/ProductsCard";
 import Home from "./pages/Home/Home";
 import AdminPanel from "./pages/AdminPanel/AdminPanel";
 import LoginForm from "./pages/Form/LoginForm";
@@ -9,6 +9,8 @@ import Prices from "./components/Prices/Prices";
 import Products from "./components/Product/Products";
 import Cart from "./components/Cart/Cart";
 import Favorites from "./components/Favorites/Favorites";
+import ProductsCardSubCategory from "./components/ProductsCard/ProductsCardSubCategory";
+import ProductsCard from "./components/ProductsSection/ProductsCard";
 
 function App() {
   return (
@@ -17,10 +19,12 @@ function App() {
         <Route path="/" element={<Navigate to="underarmour" />} />
         <Route path="/underarmour" element={<Layout />}>
           <Route element={<Home />}>
-            <Route index element={<ProductsSection />} />
+            <Route index element={<ProductsCard />} />
             <Route path="cart" element={<Cart />} />
             <Route path="favorites" element={<Favorites />} />
-            <Route path=":gender" element={<ProductsSection />} />
+            <Route path=":gender" element={<ProductsSection />}>
+              <Route path=":field" element={<ProductsCardSubCategory />} />
+            </Route>
           </Route>
 
           <Route path="admin-panel" element={<AdminPanel />}>
