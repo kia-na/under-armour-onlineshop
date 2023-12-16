@@ -80,9 +80,8 @@ function Orders() {
         deliveryStatus: true,
       })
       .then((res) => console.log(res))
-      .catch((err) => console.log(err.message));
-
-    setOpenModal(false);
+      .catch((err) => console.log(err.message))
+      .finally(setOpenModal(false));
   }
 
   // if (!serverData || !pageCount) {

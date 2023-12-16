@@ -105,7 +105,7 @@ function Products() {
               >
                 <td className="whitespace-nowrap px-6 font-medium">
                   <img
-                    src={`http://localhost:8000/images/products/images/${product.images[2]}`}
+                    src={`http://localhost:8000/images/products/thumbnails/${product.thumbnail}`}
                     alt="product-pic"
                     className="w-20"
                   />

@@ -154,8 +154,10 @@ function AddProductModal({ openModal, setOpenModal }) {
                   >
                     <option></option>
                     {Object.keys(subCategory_nameToNumber[category]).map(
-                      (SCategory) => (
-                        <option value={SCategory}>{SCategory}</option>
+                      (SCategory, index) => (
+                        <option key={index} value={SCategory}>
+                          {SCategory}
+                        </option>
                       )
                     )}
                   </select>
