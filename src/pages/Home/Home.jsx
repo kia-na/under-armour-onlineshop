@@ -17,19 +17,17 @@ function Home() {
   //HANDLE SIDEBAR
 
   return (
-    <div className="relative">
+    <div className="h-screen bg-red-500">
       <Header setOpenSideBar={setOpenSideBar} />
       <div className={`flex justify-start`}>
         <SideBar openSideBar={openSideBar} setOpenSideBar={setOpenSideBar} />
         <div
-          className={`w-3/4 gap-2 flex flex-col items-right justify-start  ${
-            openSideBar ? "hidden lg:inline" : "w-full"
-          } `}
+          className={`w-full gap-2 flex flex-col items-right justify-start `}
         >
           {params.gender ? (
             <FilteredProducts />
           ) : params.gender === "undefined" ? (
-            <ProductsSection openSideBar={openSideBar} />
+            <ProductsSection />
           ) : (
             <Outlet />
           )}
