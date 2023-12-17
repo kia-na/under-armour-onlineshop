@@ -52,12 +52,12 @@ function SideBar({ openSideBar, setOpenSideBar }) {
     <div
       id="bg"
       onClick={(e) => (e.target.id === "bg" ? setOpenSideBar(false) : null)}
-      className={`absolute top-0 w-full h-screen transition-all duration-[1s] delay-0 ease ${
+      className={`fixed top-0 h-screen w-full transition-all duration-[1s] delay-0 ease z-[100] ${
         openSideBar ? "left-0" : "-left-[40rem] w-0"
       } `}
     >
       <div
-        className={`h-screen w-full sm:w-[30rem] md:w-1/2 lg:w-1/3 xl:w-[37rem] text-center bg-white`}
+        className={`w-full h-[100%] sm:w-[30rem] md:w-1/2 lg:w-1/3 xl:w-[37rem] text-center bg-white`}
         // onClickCapture={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-center border-b-[1px] border-black">

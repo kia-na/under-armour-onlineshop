@@ -33,7 +33,7 @@ function LoginForm() {
 
   console.log(formErr);
   return (
-    <div className="h-screen bg-gray-800 w-full flex justify-center items-center relative">
+    <div className="h-screen bg-[rgba(0,0,0,.85)] w-full flex justify-center items-center relative">
       <div className="border-4 border-gary-600 p-4 rounded-lg">
         <form
           onSubmit={handleSubmit}
@@ -78,7 +78,7 @@ function LoginForm() {
             {formErr && <div className="text-red-600 mb-3">{formErr}</div>}
             <button
               type="submit"
-              className="py-1 w-full font-bold border-2 rounded-md text-white bg-gray-800 cursor-pointer sm:py-3 sm:text-lg"
+              className="py-1 w-full font-bold border-2 rounded-md text-white bg-[rgba(0,0,0,.85)] cursor-pointer sm:py-3 sm:text-lg"
             >
               SIGN IN
             </button>
