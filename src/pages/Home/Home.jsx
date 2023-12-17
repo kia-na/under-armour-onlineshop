@@ -19,12 +19,12 @@ function Home() {
   //HANDLE SIDEBAR
 
   return (
-    <div className="h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50">
       <Header setOpenSideBar={setOpenSideBar} />
-      <div className={`flex justify-start`}>
+      <div className={` gap-2 flex flex-col items-right justify-start `}>
         <SideBar openSideBar={openSideBar} setOpenSideBar={setOpenSideBar} />
         <div
-          className={`w-full gap-2 flex flex-col items-right justify-start `}
+          className={`w-full min-h-screen gap-2 flex flex-col items-right justify-start`}
         >
           {params.gender === "undefined" ? (
             <ProductsSection />
@@ -34,13 +34,13 @@ function Home() {
               subcategory={params.field}
             />
           ) : params.gender ? (
-            <ProductsCardCategory />
+            <ProductsCardCategory category={params.gender} />
           ) : (
             <Outlet />
           )}
-          <FooterSec />
         </div>
       </div>
+      <FooterSec />
     </div>
   );
 }
