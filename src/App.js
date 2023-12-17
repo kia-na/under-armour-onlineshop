@@ -23,7 +23,10 @@ function App() {
             <Route path="cart" element={<Cart />} />
             <Route path="favorites" element={<Favorites />} />
             <Route path=":gender" element={<ProductsSection />}>
-              <Route path=":field" element={<ProductsCardSubCategory />} />
+              <Route
+                path=":field"
+                element={<ProductsCardSubCategory />}
+              ></Route>
             </Route>
           </Route>
 

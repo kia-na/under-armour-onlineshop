@@ -1,6 +1,6 @@
 import React from "react";
 
-function SingleProduct(props) {
+function SingleProductCard(props) {
   return (
     <div className="min-w-[14rem] w-2/5 max-w-[22rem] flex flex-col justify-center items-start gap-2 text-sm cursor-pointer">
       <span className="mb-[5%]">
@@ -17,4 +17,4 @@ function SingleProduct(props) {
   );
 }
 
-export default SingleProduct;
+export default SingleProductCard;
