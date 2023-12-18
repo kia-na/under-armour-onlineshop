@@ -53,7 +53,7 @@ function SideBar({ openSideBar, setOpenSideBar }) {
       id="bg"
       onClick={(e) => (e.target.id === "bg" ? setOpenSideBar(false) : null)}
       className={`fixed top-0 h-screen w-full transition-all duration-[1s] delay-0 ease z-[100] ${
-        openSideBar ? "left-0" : "-left-[40rem] w-0"
+        openSideBar ? "left-0" : "-left-[120rem] w-0"
       } `}
     >
       <div
@@ -78,7 +78,10 @@ function SideBar({ openSideBar, setOpenSideBar }) {
         </div>
         <div className="pt-5 px-4 flex flex-col gap-5 lg:px-8 lg:pt-8">
           {CATEGORYS.map((category, index) => (
-            <div className="flex flex-col items-center justify-between p-3 ">
+            <div
+              key={index}
+              className="flex flex-col items-center justify-between p-3 "
+            >
               <div className="flex items-center justify-between w-full cursor-pointer">
                 <Link
                   to={category.URL}
@@ -122,6 +125,7 @@ function SideBar({ openSideBar, setOpenSideBar }) {
                 {category.subcategory &&
                   category.subcategory.map((sub, index) => (
                     <Link
+                      key={index}
                       to={`${category.URL}/${sub}`}
                       className="cursor-pointer"
                       onClick={() => setOpenSideBar(false)}

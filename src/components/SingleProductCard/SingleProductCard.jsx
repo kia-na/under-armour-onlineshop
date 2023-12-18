@@ -1,6 +1,14 @@
 import React from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import AppRoutes from "../../router/routes";
 
 function SingleProductCard(props) {
+  // console.log(`${AppRoutes.HOME}/${props._id}`);
+
+  const navigate = useNavigate();
+  const params = useParams();
+  console.log(params, "SingleProductCard");
+
   return (
     <div className="min-w-[14rem] w-2/5 max-w-[22rem] flex flex-col justify-center items-start gap-2 text-sm cursor-pointer">
       <span className="mb-[5%]">

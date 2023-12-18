@@ -3,7 +3,7 @@ import AppRoutes from "../../router/routes";
 
 function Header({ setOpenSideBar }) {
   return (
-    <div className="fixed m w-full flex items-center justify-between gap-1 h-20 px-2 bg-primary md:px-5 lg:px-8 xl:px-10">
+    <div className="fixed z-[1000] m w-full flex items-center justify-between gap-1 h-20 px-2 bg-primary md:px-5 lg:px-8 xl:px-10">
       <div className="flex gap-6 items-center justify-between lg:gap-10">
         <span
           className="text-secondary cursor-pointer"

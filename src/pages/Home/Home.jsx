@@ -11,7 +11,7 @@ import ProductsCardSubCategory from "../../components/ProductsCard/ProductsCardS
 function Home() {
   //PARAMS
   const params = useParams();
-  // console.log(params);
+  console.log(params);
   //PARAMS
 
   //HANDLE SIDEBAR
@@ -21,7 +21,7 @@ function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header setOpenSideBar={setOpenSideBar} />
-      <div className={` gap-2 flex flex-col items-right justify-start`}>
+      <div className={` gap-2 flex flex-col items-right justify-center`}>
         <SideBar openSideBar={openSideBar} setOpenSideBar={setOpenSideBar} />
         <div
           className={`w-full min-h-screen gap-2 flex flex-col items-right justify-start mt-20`}

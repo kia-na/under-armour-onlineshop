@@ -11,24 +11,26 @@ import Cart from "./components/Cart/Cart";
 import Favorites from "./components/Favorites/Favorites";
 import ProductsCardSubCategory from "./components/ProductsCard/ProductsCardSubCategory";
 import ProductsCard from "./components/ProductsSection/ProductsCard";
+import SingleProductPage from "./components/SingleProductPage/SingleProductPage";
 
 function App() {
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Navigate to="underarmour" />} />
+
         <Route path="/underarmour" element={<Layout />}>
           <Route element={<Home />}>
             <Route index element={<ProductsCard />} />
             <Route path="cart" element={<Cart />} />
             <Route path="favorites" element={<Favorites />} />
-            <Route path=":gender" element={<ProductsSection />}>
-              <Route
-                path=":field"
-                element={<ProductsCardSubCategory />}
-              ></Route>
+            <Route path=":gender" element={<ProductsCard />}>
+              <Route path=":field" element={<ProductsCardSubCategory />} />
             </Route>
           </Route>
+          {/* <Route path="/underarmour" element={<Layout />}>
+            <Route path="singleProduct:id" element={<SingleProductPage />} />
+          </Route> */}
 
           <Route path="admin-panel" element={<AdminPanel />}>
             <Route index element={<Orders />} />
