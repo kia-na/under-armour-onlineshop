@@ -98,7 +98,6 @@ function Products() {
             </tr>
           </thead>
           <tbody>
-            http://localhost:8000/images/products/thumbnails/
             {serverData.map((product) => (
               <tr
                 className="border-b dark:border-neutral-500"

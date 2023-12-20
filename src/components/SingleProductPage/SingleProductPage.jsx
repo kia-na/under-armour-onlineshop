@@ -4,7 +4,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 function SingleProductPage() {
-  const [productData, setProductData] = useState({});
+  const [productData, setProductData] = useState(null);
   const params = useParams();
   // console.log();
 
@@ -14,8 +14,8 @@ function SingleProductPage() {
       .catch((err) => console.log(err.message));
   }, [params.id]);
 
-  console.log(productData);
-  if (!productData) return null;
+  console.log();
+  if (!productData || !productData.images[1]) return null;
 
   return (
     <>
@@ -35,29 +35,31 @@ function SingleProductPage() {
             </span>
             <span className="font-light">${productData.price}.00</span>
           </div>
-          <span></span>
-          <div className="w-full flex items-center justify-start gap-4 border-b-[1px] border-gray-300 pb-5">
-            <div className="relative">
-              <span className="absolute top-[-.5rem] left-[1.2rem] bg-gray-50 text-xs">
-                Qty
+          {productData.quantity > 0 && (
+            <div className="w-full flex items-center justify-start gap-4 border-b-[1px] border-gray-300 pb-5">
+              <div className="relative">
+                <span className="absolute top-[-.5rem] left-[1.2rem] bg-gray-50 text-xs">
+                  Qty
+                </span>
+                <input
+                  type="number"
+                  defaultValue={1}
+                  min={1}
+                  max={productData.quantity}
+                  onBlur={(e) =>
+                    e.target.value > productData.quantity
+                      ? (e.target.value = productData.quantity)
+                      : null
+                  }
+                  className="border-[1px] border-gray-300 bg-transparent rounded-md w-[4rem] "
+                />
+              </div>
+              <span className="bg-red-600 w-full py-[.8rem] rounded-md text-white text-center text-xs cursor-pointer">
+                Add to Bag
               </span>
-              <input
-                type="number"
-                defaultValue={1}
-                min={1}
-                max={productData.quantity}
-                onBlur={(e) =>
-                  e.target.value > productData.quantity
-                    ? (e.target.value = productData.quantity)
-                    : null
-                }
-                className="border-[1px] border-gray-300 bg-transparent rounded-md w-[4rem] "
-              />
             </div>
-            <span className="bg-red-600 w-full py-[.8rem] rounded-md text-white text-center text-xs cursor-pointer">
-              Add to Bag
-            </span>
-          </div>
+          )}
+
           <div className="border-b-[1px] border-gray-300 pb-5 flex flex-col gap-3 mt-2">
             <span className="font-bold">What's it do?</span>
             <p className="text-xs text-gray-700 text-justify">
