@@ -27,11 +27,13 @@ function App() {
             <Route path=":gender" element={<ProductsCard />}>
               <Route path=":field" element={<ProductsCardSubCategory />} />
             </Route>
+            <Route
+              path="/underarmour/singleProduct/:id"
+              element={<SingleProductPage />}
+            />
           </Route>
 
-          <Route element={<Home />}>
-            <Route path="singleProduct:id" element={<SingleProductPage />} />
-          </Route>
+          {/* <Route element={<Home />}></Route> */}
 
           <Route path="admin-panel" element={<AdminPanel />}>
             <Route index element={<Orders />} />

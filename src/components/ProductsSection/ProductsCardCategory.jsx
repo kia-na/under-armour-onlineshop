@@ -57,7 +57,7 @@ function ProductsCardCategory({ category, pCount }) {
         ))}
       </div>
       {showPagination && pageCount !== 1 && (
-        <div className="flex overflow-x-auto sm:justify-center ">
+        <div className="flex overflow-x-auto sm:justify-center mt-10 ">
           <Pagination
             layout="pagination"
             currentPage={currentPage}

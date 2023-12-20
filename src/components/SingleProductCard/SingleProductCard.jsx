@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import AppRoutes from "../../router/routes";
+import axios from "axios";
 
 function SingleProductCard(props) {
-  // console.log(`${AppRoutes.HOME}/${props._id}`);
   const [hover, setHover] = useState(false);
-  const navigate = useNavigate();
-  // console.log(params, "SingleProductCard");
+
+  // console.log("SingleProductCard");
 
   return (
     <Link
-      to={`${AppRoutes.HOME}/singleProduct${props._id}`}
+      to={`${AppRoutes.HOME}/singleProduct/${props._id}`}
       className="min-w-[14rem] w-2/5 max-w-[22rem] flex flex-col justify-center items-start gap-2 text-sm cursor-pointer"
     >
       <span className="mb-[5%]">

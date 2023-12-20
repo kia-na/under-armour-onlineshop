@@ -11,7 +11,7 @@ import ProductsCardSubCategory from "../../components/ProductsCard/ProductsCardS
 function Home() {
   //PARAMS
   const params = useParams();
-  console.log(params);
+  // console.log(params);
   //PARAMS
 
   //HANDLE SIDEBAR

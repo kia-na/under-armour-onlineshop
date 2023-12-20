@@ -1,23 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 function SingleProductPage() {
+  const [productData, setProductData] = useState({});
+  const params = useParams();
+  // console.log();
+
+  useEffect(() => {
+    axios(`http://localhost:8000/api/products/${params.id}`)
+      .then((res) => setProductData(res.data.data.product))
+      .catch((err) => console.log(err.message));
+  }, [params.id]);
+
+  console.log(productData);
+  if (!productData) return null;
+
   return (
     <>
-      <div className="flex flex-col justify-between items-start w-[80%] md:flex-row md:w-[90%] md:gap-10 lg:w-[80%] lg:justify-center  gap-5 mx-auto mt-10">
+      <div className="flex flex-col justify-between items-start w-[80%] md:flex-row md:w-[90%] md:gap-10 lg:w-[80%] lg:justify-center  gap-5 mx-auto mt-10 md:mt-16 xl:mt-28">
         <div className=" w-full md:w-auto flex justify-center items-center">
           {/* <ImageCarousel /> */}
           <img
-            src="/shoe.webp"
+            src={`http://localhost:8000/images/products/images/${productData.images[1]}`}
             alt=""
-            className="w-[20rem] md:w-[30rem] lg:w-[40rem] xl:w-[38rem]"
+            className="w-[20rem] md:w-[30rem] lg:w-[40rem] xl:w-[45rem]"
           />
         </div>
         <div className="w-full flex flex-col gap-3 lg:max-w-[30rem]">
           <div className="border-b-[1px] border-gray-300 pb-5 flex flex-col items-start justify-center">
             <span className="font-bold text-lg w-[90%]">
-              Grade School UA SlipSpeed™ Training Shoes
+              {productData.name}
             </span>
-            <span className="font-light">$130.00</span>
+            <span className="font-light">${productData.price}.00</span>
           </div>
           <span></span>
           <div className="w-full flex items-center justify-start gap-4 border-b-[1px] border-gray-300 pb-5">
@@ -29,7 +45,12 @@ function SingleProductPage() {
                 type="number"
                 defaultValue={1}
                 min={1}
-                max={5}
+                max={productData.quantity}
+                onBlur={(e) =>
+                  e.target.value > productData.quantity
+                    ? (e.target.value = productData.quantity)
+                    : null
+                }
                 className="border-[1px] border-gray-300 bg-transparent rounded-md w-[4rem] "
               />
             </div>
@@ -40,10 +61,7 @@ function SingleProductPage() {
           <div className="border-b-[1px] border-gray-300 pb-5 flex flex-col gap-3 mt-2">
             <span className="font-bold">What's it do?</span>
             <p className="text-xs text-gray-700 text-justify">
-              These are the most versatile training shoes we've ever made. They
-              feel great, feel cool, cushion better, fit perfectly, handle your
-              toughest training, AND have a heel that converts easily from
-              recover mode to train mode.
+              {productData.description}
             </p>
           </div>
           <div>
@@ -55,11 +73,13 @@ function SingleProductPage() {
           </div>
         </div>
       </div>
-      <div className="w-full bg-[rgb(0,0,0)] fixed bottom-0 left-0 py-2 lg:py-4 text-center text-white font-extrabold text-lg">
-        <hr />
-        Sold Out
-        <hr />
-      </div>
+      {productData.quantity < 1 && (
+        <div className="w-full bg-[rgb(0,0,0)] fixed bottom-0 left-0 py-2 lg:py-4 text-center text-white font-extrabold text-lg">
+          <hr />
+          Sold Out
+          <hr />
+        </div>
+      )}
     </>
   );
 }

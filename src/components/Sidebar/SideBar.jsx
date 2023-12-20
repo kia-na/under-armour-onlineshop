@@ -40,34 +40,34 @@ function SideBar({ openSideBar, setOpenSideBar }) {
   // const [subcategories, setSubcategories] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    //GET ALL CATEGORY
-    let cname = [];
-    axios("http://localhost:8000/api/categories")
-      .then((res) => {
-        console.log(res.data.data.categories);
-        res.data.data.categories.forEach((category) => {
-          cname.push(category.name);
-        });
-      })
-      .catch((err) => console.log(err.message));
+  // useEffect(() => {
+  //   //GET ALL CATEGORY
+  //   let cname = [];
+  //   axios("http://localhost:8000/api/categories")
+  //     .then((res) => {
+  //       console.log(res.data.data.categories);
+  //       res.data.data.categories.forEach((category) => {
+  //         cname.push(category.name);
+  //       });
+  //     })
+  //     .catch((err) => console.log(err.message));
 
-    setCategories(cname);
+  // setCategories(cname);
 
-    //GET ALL SUBCATEGORY
-    //   let scname = [];
-    //   axios("http://localhost:8000/api/subcategories")
-    //     .then((res) => {
-    //       console.log(res.data.data.subcategories);
-    //       res.data.data.subcategories.forEach((subcategory) => {
-    //         scname.push(subcategory.name);
-    //       });
-    //     })
-    //     .catch((err) => console.log(err.message));
+  //GET ALL SUBCATEGORY
+  //   let scname = [];
+  //   axios("http://localhost:8000/api/subcategories")
+  //     .then((res) => {
+  //       console.log(res.data.data.subcategories);
+  //       res.data.data.subcategories.forEach((subcategory) => {
+  //         scname.push(subcategory.name);
+  //       });
+  //     })
+  //     .catch((err) => console.log(err.message));
 
-    //   setSubcategories(scname);
-    //   console.log(subcategories, "dssdsdsdsdsdsd");
-  }, []);
+  //   setSubcategories(scname);
+  //   console.log(subcategories, "dssdsdsdsdsdsd");
+  // }, []);
 
   return (
     <div
