@@ -19,9 +19,7 @@ function ProductsCard() {
   return (
     <div className={`w-full flex flex-col items-center justify-start`}>
       {categories.map((category, index) => (
-        <Link key={index} to={`singleProduct/${category._id}`}>
-          <ProductsCardCategory category={category.name} pCount={6} />
-        </Link>
+        <ProductsCardCategory key={index} category={category.name} pCount={6} />
       ))}
     </div>
   );

@@ -1,22 +1,42 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+import { Pagination } from "flowbite-react";
 import SingleProductCard from "../SingleProductCard/SingleProductCard";
 import { useNavigate } from "react-router-dom";
+import { category_nameToNumber } from "../Product/dataConversion";
 
-function ProductsCardCategory({ category, pCount = -1 }) {
+function ProductsCardCategory({ category, pCount }) {
   const [data, setData] = useState([]);
 
   const navigate = useNavigate();
-  // console.log(category);
+
+  // PAGINATING
+  const [currentPage, setCurrentPage] = useState(1);
+  const onPageChange = (page) => setCurrentPage(page);
+  const [showPagination, setShowPagination] = useState(true);
+  const [pageCount, setPageCount] = useState(null);
 
   useEffect(() => {
-    axios(`http://localhost:8000/api/products/`)
-      .then((res) => setData(res.data.data.products.slice(0, pCount)))
-      .then((err) => console.log(err));
-  }, []);
+    function getData() {
+      axios(
+        `http://localhost:8000/api/products?category=${category_nameToNumber[category]}&page=${currentPage}`
+      )
+        .then((res) => {
+          // console.log(res.data);
+          if (pCount) {
+            setData(res.data.data.products.slice(0, pCount));
 
-  // console.log(data.slice(0, 6));
+            setShowPagination(false);
+          } else {
+            setData(res.data.data.products);
+          }
+
+          setPageCount(Math.ceil(res.data.total / 10));
+        })
+        .catch((err) => console.log(err.message));
+    }
+    getData();
+  }, [currentPage, category]);
 
   return (
     <div className="min-h-[90vh] max-w-[90rem] mx-auto flex flex-col justify-start items-center gap-2 mt-10 border-b-[1px] border-t-[1px] border-gray-400 py-5">
@@ -36,6 +56,19 @@ function ProductsCardCategory({ category, pCount = -1 }) {
           <SingleProductCard key={index} {...product} />
         ))}
       </div>
+      {showPagination && pageCount !== 1 && (
+        <div className="flex overflow-x-auto sm:justify-center ">
+          <Pagination
+            layout="pagination"
+            currentPage={currentPage}
+            totalPages={pageCount}
+            onPageChange={onPageChange}
+            previousLabel="Back"
+            nextLabel="Next"
+            showIcons
+          />
+        </div>
+      )}
     </div>
   );
 }

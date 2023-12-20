@@ -22,6 +22,26 @@ const subCategoryArr = {
     "6570870cfa7d81b2c81bb683": "Running",
   },
   //women
+  //boys
+  "65707782d9fb65576da8e0cf": {
+    "6582f0c2ecde31ac5592472c": "Basketball",
+    "6582f0baecde31ac55924728": "Training",
+  },
+  //boys
+  //girls
+  "65707789d9fb65576da8e0d3": {
+    "6582f12decde31ac55924742": "Running",
+    "6582f162ecde31ac5592474e": "Basketball",
+  },
+  //girls
+  //unisex
+  "6570774fd9fb65576da8e0c3": {
+    "6582f19fecde31ac55924756": "Basketball",
+    "6582f1d3ecde31ac55924766": "Running",
+    "6582f1daecde31ac5592476e": "Training",
+    "6582f202ecde31ac55924776": "Track & field",
+  },
+  //unisex
 };
 
 const category_nameToNumber = {
@@ -44,6 +64,20 @@ const subCategory_nameToNumber = {
     Basketball: "6571f7c306651643c724d590",
     Training: "65708702fa7d81b2c81bb67f",
     Running: "6570870cfa7d81b2c81bb683",
+  },
+  unisex: {
+    Basketball: "6582f19fecde31ac55924756",
+    Running: "6582f1d3ecde31ac55924766",
+    Training: "6582f1daecde31ac5592476e",
+    "Track/field": "6582f202ecde31ac55924776",
+  },
+  boys: {
+    Basketball: "6582f0c2ecde31ac5592472c",
+    Training: "6582f0baecde31ac55924728",
+  },
+  girls: {
+    Basketball: "6582f162ecde31ac5592474e",
+    Running: "6582f12decde31ac55924742",
   },
 };
 

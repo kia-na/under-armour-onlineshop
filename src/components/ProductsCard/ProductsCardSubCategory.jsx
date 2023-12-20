@@ -1,24 +1,44 @@
 import axios from "axios";
 import React, { useEffect, useState, useParams } from "react";
-
+import {
+  category_nameToNumber,
+  subCategory_nameToNumber,
+} from "../Product/dataConversion";
 import SingleProductCard from "../SingleProductCard/SingleProductCard";
+import { Pagination } from "flowbite-react";
 
 function ProductsCardSubCategory({ category, subcategory }) {
-  // const params = useParams();
-  // console.log(params, "d");
-
   const [data, setData] = useState([]);
-  // console.log(category, subcategory);
+  console.log("CardSubCategory");
+
+  // PAGINATING
+  const [currentPage, setCurrentPage] = useState(1);
+  const onPageChange = (page) => setCurrentPage(page);
+  // const [showPagination, setShowPagination] = useState(true);
+  const [pageCount, setPageCount] = useState(null);
 
   useEffect(() => {
-    axios(`http://localhost:8000/api/products/`)
-      .then((res) => setData(res.data.data.products))
-      .then((err) => console.log(err));
-  }, []);
-  // console.log(data);
+    function getData() {
+      let subCategoryId =
+        subCategory_nameToNumber[category][
+          subcategory[0].toUpperCase() + subcategory.slice(1)
+        ];
+
+      axios(
+        `http://localhost:8000/api/products?category=${category_nameToNumber[category]}&subcategory=${subCategoryId}&page=${currentPage}`
+      )
+        .then((res) => {
+          console.log(res.data);
+          setData(res.data.data.products);
+          setPageCount(Math.ceil(res.data.total / 10));
+        })
+        .catch((err) => console.log(err.message));
+    }
+    getData();
+  }, [currentPage, subcategory]);
 
   return (
-    <div className="min-h-[100vh] max-w-[100rem] mx-auto flex flex-col justify-end items-center gap-2 mt-8">
+    <div className="min-h-[100vh] max-w-[100rem] mx-auto flex flex-col justify-start items-center gap-2 mt-8">
       <span className="text-gray-500 self-start ml-3 pl-5 sm:ml-6 md:ml-8">
         {category + " / " + subcategory}
       </span>
@@ -31,6 +51,19 @@ function ProductsCardSubCategory({ category, subcategory }) {
           <SingleProductCard key={index} {...product} />
         ))}
       </div>
+      {pageCount !== 1 && (
+        <div className="flex overflow-x-auto sm:justify-center ">
+          <Pagination
+            layout="pagination"
+            currentPage={currentPage}
+            totalPages={pageCount}
+            onPageChange={onPageChange}
+            previousLabel="Back"
+            nextLabel="Next"
+            showIcons
+          />
+        </div>
+      )}
     </div>
   );
 }

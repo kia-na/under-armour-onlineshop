@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Accordion } from "flowbite-react";
 import AppRoutes from "../../router/routes";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const CATEGORYS = [
   { URL: "", title: "ALL" },
   {
     URL: "unisex",
     title: "UNISEX",
-    subcategory: ["basketball", "training", "running"],
+    subcategory: ["basketball", "training", "running", "Track/field"],
   },
   {
     URL: "men",
@@ -24,35 +25,55 @@ const CATEGORYS = [
   {
     URL: "boys",
     title: "BOYS",
-    subcategory: ["basketball", "training", "running"],
+    subcategory: ["basketball", "training"],
   },
   {
     URL: "girls",
     title: "GIRLS",
-    subcategory: ["basketball", "training", "running"],
+    subcategory: ["basketball", "running"],
   },
 ];
-// const CATEGORYS = [
-//   { URL: "", title: { name: "ALL" ,} },
-//   { URL: "unisex", title: "UNISEX" },
-//   { URL: "men", title: "MEN" },
-//   { URL: "women", title: "WOMEN" },
-//   { URL: "boys", title: "BOYS" },
-//   { URL: "girls", title: "GIRLS" },
-// ];
-// ${
-//   openSideBar ? "w-full relative lg:w-1/4" : "absolute left-[-20rem]"
-// }
-// bg-[rgba(0,0,0,.60)]
+
 function SideBar({ openSideBar, setOpenSideBar }) {
   const [showSubcategory, setShowSubcategory] = useState("");
+  // const [categories, setCategories] = useState([]);
+  // const [subcategories, setSubcategories] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    //GET ALL CATEGORY
+    let cname = [];
+    axios("http://localhost:8000/api/categories")
+      .then((res) => {
+        console.log(res.data.data.categories);
+        res.data.data.categories.forEach((category) => {
+          cname.push(category.name);
+        });
+      })
+      .catch((err) => console.log(err.message));
+
+    setCategories(cname);
+
+    //GET ALL SUBCATEGORY
+    //   let scname = [];
+    //   axios("http://localhost:8000/api/subcategories")
+    //     .then((res) => {
+    //       console.log(res.data.data.subcategories);
+    //       res.data.data.subcategories.forEach((subcategory) => {
+    //         scname.push(subcategory.name);
+    //       });
+    //     })
+    //     .catch((err) => console.log(err.message));
+
+    //   setSubcategories(scname);
+    //   console.log(subcategories, "dssdsdsdsdsdsd");
+  }, []);
 
   return (
     <div
       id="bg"
       onClick={(e) => (e.target.id === "bg" ? setOpenSideBar(false) : null)}
-      className={`fixed top-0 h-screen w-full transition-all duration-[1s] delay-0 ease z-[100] ${
+      className={`fixed top-0 h-screen w-full transition-all duration-[1s] delay-0 ease z-[2000] ${
         openSideBar ? "left-0" : "-left-[120rem] w-0"
       } `}
     >

@@ -28,9 +28,10 @@ function App() {
               <Route path=":field" element={<ProductsCardSubCategory />} />
             </Route>
           </Route>
-          {/* <Route path="/underarmour" element={<Layout />}>
+
+          <Route element={<Home />}>
             <Route path="singleProduct:id" element={<SingleProductPage />} />
-          </Route> */}
+          </Route>
 
           <Route path="admin-panel" element={<AdminPanel />}>
             <Route index element={<Orders />} />
