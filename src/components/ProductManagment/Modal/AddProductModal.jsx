@@ -19,11 +19,15 @@ const validationSchema = Yup.object({
     .required("price is required!"),
   quantity: Yup.number().positive().integer().required("Quantity is required!"),
   description: Yup.string().required("Description is required!"),
-  images: Yup.string().required("Images is required!"),
+  // images: Yup.string().required("Images is required!"),
+  // thumbnail: Yup.string().required("Thumbnail is required!"),
 });
 
 function AddProductModal({ openModal, setOpenModal }) {
   const [category, setCategory] = useState("men");
+
+  const [thumbnail, setThumbnail] = useState(null);
+  const [images, setImages] = useState([]);
 
   const [editorLoaded, setEditorLoaded] = useState(false);
   const [data, setData] = useState("");
@@ -40,7 +44,6 @@ function AddProductModal({ openModal, setOpenModal }) {
       subcategory: "",
       price: "",
       quantity: "",
-      images: "",
       description: "",
     },
     onSubmit: addProductToServer,
@@ -55,16 +58,14 @@ function AddProductModal({ openModal, setOpenModal }) {
     values.brand = "under armour";
 
     const formData = new FormData();
-    formData.append("name", values.name);
-    formData.append("category", values.category);
-    formData.append("subcategory", values.subcategory);
-    formData.append("price", values.price);
-    formData.append("quantity", values.quantity);
-    formData.append("description", values.description);
-    formData.append("brand", values.brand);
-    formData.append("thumbnail", values.images);
+    Object.keys(values).forEach((key) => formData.append(key, values[key]));
 
-    console.log(values.images, "thumbnail");
+    formData.append("thumbnail", thumbnail);
+
+    images.forEach((image) => {
+      formData.append("images", image);
+    });
+    // formData.append("images", images);
 
     axios({
       url: "http://localhost:8000/api/products",
@@ -77,8 +78,13 @@ function AddProductModal({ openModal, setOpenModal }) {
       .then((res) => console.log(res.message, "h"))
       .catch((err) => console.log(err.message))
       .finally(setOpenModal(false));
-  }
 
+    for (var key of formData.entries()) {
+      console.log(key[0] + ", " + key[1]);
+    }
+  }
+  console.log(thumbnail, "thumbnail");
+  console.log(images, "images");
   //HANDLE ESC KEY PRESS FOR CLOSING MODAl
   function handleKeyPress(e) {
     if (e.key === "Escape") {
@@ -217,21 +223,48 @@ function AddProductModal({ openModal, setOpenModal }) {
               </div>
               <div className="w-full">
                 <label className="flex flex-col items-start justify-center gap-1">
+                  <span className="font-bold text-sm">Thumbnail:*</span>
+                  <input
+                    // onBlur={formik.handleBlur}
+                    // onChange={formik.handleChange}
+                    onChange={(event) => {
+                      setThumbnail(event.target.files[0]);
+                      // formik.handleChange();
+                    }}
+                    required
+                    // value={formik.values.images}
+                    type="file"
+                    name="thumbnail"
+                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                  />
+                  {/* {formik.errors.thumbnail && formik.touched.thumbnail && (
+                    <div className="text-red-600 text-sm">
+                      {formik.errors.thumbnail}
+                    </div>
+                  )} */}
+                </label>
+              </div>
+              <div className="w-full">
+                <label className="flex flex-col items-start justify-center gap-1">
                   <span className="font-bold text-sm">Images:*</span>
                   <input
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.images}
+                    required
+                    // onBlur={formik.handleBlur}
+                    // onChange={formik.handleChange}
+                    onChange={(event) =>
+                      setImages(Array.from(event.target.files))
+                    }
+                    // value={formik.values.images}
                     type="file"
                     name="images"
                     multiple
                     className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   />
-                  {formik.errors.images && formik.touched.images && (
+                  {/* {formik.errors.images && formik.touched.images && (
                     <div className="text-red-600 text-sm">
                       {formik.errors.images}
                     </div>
-                  )}
+                  )} */}
                 </label>
               </div>
               <div className="w-full">

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 // import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
 
-function CKeditor({ onChange, editorLoaded, name, value }) {
+function Editor({ onChange, editorLoaded, name, value }) {
   const editorRef = useRef();
   const { CKEditor, ClassicEditor } = editorRef.current || {};
 
@@ -33,4 +33,4 @@ function CKeditor({ onChange, editorLoaded, name, value }) {
   );
 }
 
-export default CKeditor;
+export default Editor;

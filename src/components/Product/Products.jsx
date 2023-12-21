@@ -48,7 +48,7 @@ function Products() {
       // console.log(response);
     }
     getPageCount();
-  }, [currentPage, openModal]);
+  }, [currentPage, openModal, openEditModal, openAddModal]);
 
   //OPEN DELETE MODAL
   function handleOpenModal(productId) {
@@ -190,7 +190,7 @@ function Products() {
         <EditProductModal
           openModal={setOpenEditModal}
           setOpenModal={setOpenEditModal}
-          editItem={editItem}
+          editItemId={editItem}
         />
       )}
       {openAddModal && (

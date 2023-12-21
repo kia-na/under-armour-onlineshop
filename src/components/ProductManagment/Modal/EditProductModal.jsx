@@ -1,35 +1,97 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button } from "flowbite-react";
+import { useFormik } from "formik";
+import {
+  category_nameToNumber,
+  subCategory_nameToNumber,
+} from "../../Product/dataConversion";
+import * as Yup from "yup";
 import axios from "axios";
+import Editor from "../../CKeditor/CKeditor";
 
-function EditProductModal({ openModal, setOpenModal, editItem }) {
+//FORMIK VALIDATION
+const validationSchema = Yup.object({
+  name: Yup.string().min(4, "Too short!"),
+  category: Yup.string(),
+  subcategory: Yup.string(),
+  price: Yup.number().positive("Price must be positive"),
+  quantity: Yup.number().positive().integer(),
+  description: Yup.string(),
+  images: Yup.string(),
+});
+
+function EditProductModal({ openModal, setOpenModal, editItemId }) {
+  const [category, setCategory] = useState("men");
+  const [defaultValue, setDefaultValue] = useState(null);
+
+  const [editorLoaded, setEditorLoaded] = useState(true);
+  const [data, setData] = useState("");
+
+  useEffect(() => {
+    // GET DATA FROM SERVER
+    function getData() {
+      axios(`http://localhost:8000/api/products/${editItemId}`)
+        .then((res) => setDefaultValue(res.data.data.product))
+        .catch((err) => console.log(err.message));
+    }
+    getData();
+    // console.log(defaultValue);
+  }, [editItemId]);
+
+  //FORMIK
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      category: "",
+      subcategory: "",
+      price: "",
+      quantity: "",
+      images: "",
+      description: "",
+    },
+    onSubmit: updateServer,
+    validationSchema,
+  });
+
+  // console.log(defaultValue.subcategory.name);
+
+  //ON SUBMIT : SENDING NEW PRODUCT DATA TO SERVER
+  function updateServer(values) {
+    for (let [key, value] of Object.entries(values)) {
+      if (!value) {
+        delete values[key];
+      }
+      if (key === "category") values.category = category_nameToNumber[category];
+      if (key === "subcategory")
+        values.subcategory =
+          subCategory_nameToNumber[category][values.subcategory];
+    }
+
+    console.log(values);
+
+    axios({
+      url: `http://localhost:8000/api/products/${defaultValue._id}`,
+      method: "PATCH",
+      data: values,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((res) => console.log(res.message, "h"))
+      .catch((err) => console.log(err.message))
+      .finally(setOpenModal(false));
+  }
+
   //HANDLE ESC KEY PRESS FOR CLOSING MODAl
   function handleKeyPress(e) {
     if (e.key === "Escape") {
       setOpenModal(false);
     }
   }
-
-  function handleEdit() {
-    console.log("deleted item?");
-    axios(`http://localhost:8000/api/products/${editItem}`)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-    // setOpenModal(false);
+  console.log(defaultValue);
+  if (!defaultValue) {
+    return null;
   }
-
-  useEffect(() => {
-    //EDIT PRODUCT FROM SERVER
-    function getData() {
-      console.log("deleted item?");
-      axios(`http://localhost:8000/api/products/${editItem}`)
-        .then((res) => console.log(res.data.data.product))
-        .catch((err) => console.log(err));
-      // setOpenModal(false);
-    }
-    getData();
-  }, [editItem]);
-
   return (
     <>
       <Modal
@@ -45,88 +107,186 @@ function EditProductModal({ openModal, setOpenModal, editItem }) {
         </Modal.Header>
         <Modal.Body>
           <div className="text-center">
-            <form className="flex flex-col items-center justify-center gap-4 sm:px-8 mb-6">
+            <form
+              className="flex flex-col items-center justify-center gap-4 sm:px-8"
+              onSubmit={formik.handleSubmit}
+            >
               <div className="w-full">
                 <label className="flex flex-col items-start justify-center gap-1">
                   <span className="font-bold text-sm">Name:*</span>
                   <input
+                    required
+                    onBlur={formik.handleBlur}
                     type="text"
-                    name="Name"
+                    name="name"
+                    onChange={formik.handleChange}
+                    defaultValue={defaultValue.name}
                     className="w-full outline-none bg-inherit border-[1px] border-gray-300 rounded-md text-gray-500 px-4 py-2"
                   />
+                  {formik.errors.name && formik.touched.name && (
+                    <div className="text-red-600 text-sm">
+                      {formik.errors.name}
+                    </div>
+                  )}
                 </label>
               </div>
               <div className="w-full flex items-center justify-between gap-2">
                 <label className="w-1/2 flex flex-col items-start justify-center gap-1">
                   <span className="font-bold text-sm">Category:*</span>
                   <select
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    // value={formik.values.category}
+                    onChangeCapture={(e) => setCategory(e.target.value)}
                     name="category"
                     className="w-full bg-inherit border-[1px] border-gray-300 rounded-md text-gray-500 px-4 py-2"
                   >
-                    <option value="men">Men</option>
-                    <option value="women">Women</option>
-                    <option value="boys">Boys</option>
-                    <option value="girls">Girls</option>
-                    <option value="unisex">Unisex</option>
+                    <option value=""></option>
+                    <option
+                      selected={defaultValue.category.name === "men"}
+                      value="men"
+                    >
+                      Men
+                    </option>
+                    <option
+                      selected={defaultValue.category.name === "women"}
+                      value="women"
+                    >
+                      Women
+                    </option>
+                    <option
+                      selected={defaultValue.category.name === "boys"}
+                      value="boys"
+                    >
+                      Boys
+                    </option>
+                    <option
+                      selected={defaultValue.category.name === "girls"}
+                      value="girls"
+                    >
+                      Girls
+                    </option>
+                    <option
+                      selected={defaultValue.category.name === "unisex"}
+                      value="unisex"
+                    >
+                      Unisex
+                    </option>
                   </select>
+                  {formik.errors.category && formik.touched.category && (
+                    <div className="text-red-600 text-sm">
+                      {formik.errors.category}
+                    </div>
+                  )}
+                  {formik.errors.subcategory && formik.touched.subcategory && (
+                    <div className="text-red-600 text-sm h-5"></div>
+                  )}
                 </label>
                 <label className="w-1/2 flex flex-col items-start justify-center gap-1">
                   <span className="font-bold text-sm">Sub Category:*</span>
                   <select
-                    name="category"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    // value={formik.values.subcategory}
+                    name="subcategory"
                     className="w-full bg-inherit border-[1px] border-gray-300 rounded-md text-gray-500 px-4 py-2"
                   >
-                    <option value="running">Running</option>
-                    <option value="training">Training</option>
-                    <option value="basketball">Basketball</option>
+                    <option></option>
+                    {Object.keys(subCategory_nameToNumber[category]).map(
+                      (SCategory, index) => (
+                        <option
+                          key={index}
+                          value={SCategory}
+                          selected={defaultValue.subcategory.name === SCategory}
+                        >
+                          {SCategory}
+                        </option>
+                      )
+                    )}
                   </select>
+                  {formik.errors.subcategory && formik.touched.subcategory && (
+                    <div className="text-red-600 text-sm">
+                      {formik.errors.subcategory}
+                    </div>
+                  )}
+                  {formik.errors.category && formik.touched.category && (
+                    <div className="text-red-600 text-sm h-5"></div>
+                  )}
                 </label>
               </div>
               <div className="w-full">
                 <label className="flex flex-col items-start justify-center gap-1">
                   <span className="font-bold text-sm">Price:*</span>
                   <input
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    // value={formik.values.price}
+                    defaultValue={defaultValue.price}
                     type="number"
-                    name="Price"
+                    name="price"
                     className="w-full bg-inherit border-[1px] border-gray-300 rounded-md text-gray-500 px-4 py-2"
                   />
+                  {formik.errors.price && formik.touched.price && (
+                    <div className="text-red-600 text-sm">
+                      {formik.errors.price}
+                    </div>
+                  )}
                 </label>
               </div>
               <div className="w-full">
                 <label className="flex flex-col items-start justify-center gap-1">
                   <span className="font-bold text-sm">Quantity:*</span>
                   <input
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    // value={formik.values.quantity}
+                    defaultValue={defaultValue.quantity}
                     type="number"
-                    name="Quantity"
+                    name="quantity"
                     className="w-full bg-inherit border-[1px] border-gray-300 rounded-md text-gray-500 px-4 py-2"
                   />
+                  {formik.errors.quantity && formik.touched.quantity && (
+                    <div className="text-red-600 text-sm">
+                      {formik.errors.quantity}
+                    </div>
+                  )}
                 </label>
               </div>
-              <div className="w-full">
-                <label className="flex flex-col items-start justify-center gap-1">
-                  <span className="font-bold text-sm">Images:*</span>
-                  <input
-                    type="file"
-                    name="Name"
-                    multiple
-                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                  />
-                </label>
-              </div>
+
               <div className="w-full">
                 <label className="flex flex-col items-start justify-center gap-1">
                   <span className="font-bold text-sm">Description:*</span>
 
-                  <textarea
+                  {/* <textarea
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    // value={formik.values.description}
+                    defaultValue={defaultValue.description}
                     name="description"
                     className="w-full h-[8rem] bg-inherit border-[1px] border-gray-300 rounded-md text-gray-500 px-4 py-2"
-                  ></textarea>
+                  ></textarea> */}
+                  <Editor
+                    className="w-[5rem] bg-red-300"
+                    name="description"
+                    onChange={(data) => {
+                      setData(data);
+                    }}
+                    editorLoaded={editorLoaded}
+                  />
+                  {JSON.stringify(data)}
+                  {formik.errors.description && formik.touched.description && (
+                    <div className="text-red-600 text-sm">
+                      {formik.errors.description}
+                    </div>
+                  )}
                 </label>
               </div>
+              <div className="flex justify-center">
+                <Button className="w-[8rem] bg-black" type="submit">
+                  Edit Product
+                </Button>
+              </div>
             </form>
-            <div className="flex justify-center gap-4">
-              <Button className="bg-black">Save</Button>
-            </div>
           </div>
         </Modal.Body>
       </Modal>
