@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { Carousel } from "flowbite-react";
 
 function SingleProductPage() {
   const [productData, setProductData] = useState(null);
@@ -17,16 +18,29 @@ function SingleProductPage() {
   console.log();
   if (!productData || !productData.images[1]) return null;
 
+  console.log(productData, "page");
   return (
     <>
       <div className="flex flex-col justify-between items-start w-[80%] md:flex-row md:w-[90%] md:gap-10 lg:w-[80%] lg:justify-center  gap-5 mx-auto mt-10 md:mt-16 xl:mt-28">
         <div className=" w-full md:w-auto flex justify-center items-center">
-          {/* <ImageCarousel /> */}
           <img
             src={`http://localhost:8000/images/products/images/${productData.images[1]}`}
             alt=""
             className="w-[20rem] md:w-[30rem] lg:w-[40rem] xl:w-[45rem]"
           />
+
+          <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
+            {/* <Carousel>
+              {productData.images.map((pic, index) => (
+                <img
+                  key={index}
+                  src={`http://localhost:8000/images/products/images/${pic}`}
+                  alt="..."
+                />
+                
+              ))}
+            </Carousel> */}
+          </div>
         </div>
         <div className="w-full flex flex-col gap-3 lg:max-w-[30rem]">
           <div className="border-b-[1px] border-gray-300 pb-5 flex flex-col items-start justify-center">

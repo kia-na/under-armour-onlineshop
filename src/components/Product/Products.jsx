@@ -70,7 +70,7 @@ function Products() {
     <>
       <div className="text-sm text-left w-full  sm:w-11/12 lg:w-5/6 sm:text-lg font-bold cursor-pointer py-2 px-4 mt-4 sm:mb-4 sm:mt-8 md:mt-16 ">
         <span
-          className="rounded-md border-2 py-1 px-3 hover:text-secondary hover:bg-primary hover:py-2"
+          className="rounded-md bg-black text-white py-1 px-4 hover:text-gray-200"
           onClick={() => setOpenAddModal(true)}
         >
           Add product
@@ -105,7 +105,7 @@ function Products() {
               >
                 <td className="whitespace-nowrap px-6 font-medium">
                   <img
-                    src={`${product.thumbnail}`}
+                    src={`http://localhost:8000/images/products/thumbnails/${product.thumbnail}`}
                     alt="product-pic"
                     className="w-20"
                   />

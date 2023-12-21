@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button } from "flowbite-react";
 import axios from "axios";
 
@@ -10,7 +10,6 @@ function EditProductModal({ openModal, setOpenModal, editItem }) {
     }
   }
 
-  //EDIT PRODUCT FROM SERVER
   function handleEdit() {
     console.log("deleted item?");
     axios(`http://localhost:8000/api/products/${editItem}`)
@@ -18,6 +17,18 @@ function EditProductModal({ openModal, setOpenModal, editItem }) {
       .catch((err) => console.log(err));
     // setOpenModal(false);
   }
+
+  useEffect(() => {
+    //EDIT PRODUCT FROM SERVER
+    function getData() {
+      console.log("deleted item?");
+      axios(`http://localhost:8000/api/products/${editItem}`)
+        .then((res) => console.log(res.data.data.product))
+        .catch((err) => console.log(err));
+      // setOpenModal(false);
+    }
+    getData();
+  }, [editItem]);
 
   return (
     <>
@@ -114,9 +125,7 @@ function EditProductModal({ openModal, setOpenModal, editItem }) {
               </div>
             </form>
             <div className="flex justify-center gap-4">
-              <Button className="bg-black" onClick={handleEdit}>
-                Save
-              </Button>
+              <Button className="bg-black">Save</Button>
             </div>
           </div>
         </Modal.Body>

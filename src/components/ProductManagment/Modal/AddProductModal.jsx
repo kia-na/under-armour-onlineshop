@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button } from "flowbite-react";
 import { useFormik } from "formik";
 import {
@@ -7,6 +7,7 @@ import {
 } from "../../Product/dataConversion";
 import * as Yup from "yup";
 import axios from "axios";
+import CKeditor from "../../CKeditor/CKeditor";
 
 //FORMIK VALIDATION
 const validationSchema = Yup.object({
@@ -23,6 +24,13 @@ const validationSchema = Yup.object({
 
 function AddProductModal({ openModal, setOpenModal }) {
   const [category, setCategory] = useState("men");
+
+  const [editorLoaded, setEditorLoaded] = useState(false);
+  const [data, setData] = useState("");
+
+  useEffect(() => {
+    setEditorLoaded(true);
+  }, []);
 
   //FORMIK
   const formik = useFormik({
@@ -56,7 +64,7 @@ function AddProductModal({ openModal, setOpenModal }) {
     formData.append("brand", values.brand);
     formData.append("thumbnail", values.images);
 
-    // console.log(formData.get("thumbnail"));
+    console.log(values.images, "thumbnail");
 
     axios({
       url: "http://localhost:8000/api/products",
@@ -66,7 +74,7 @@ function AddProductModal({ openModal, setOpenModal }) {
         "Content-Type": "multipart/form-data",
       },
     })
-      .then((res) => console.log(res.message))
+      .then((res) => console.log(res.message, "h"))
       .catch((err) => console.log(err.message))
       .finally(setOpenModal(false));
   }
@@ -237,6 +245,15 @@ function AddProductModal({ openModal, setOpenModal }) {
                     name="description"
                     className="w-full h-[8rem] bg-inherit border-[1px] border-gray-300 rounded-md text-gray-500 px-4 py-2"
                   ></textarea>
+                  {/* <CKeditor
+                    className="w-[5rem] bg-red-300"
+                    name="description"
+                    onChange={(data) => {
+                      setData(data);
+                    }}
+                    editorLoaded={editorLoaded}
+                  />
+                  {JSON.stringify(data)} */}
                   {formik.errors.description && formik.touched.description && (
                     <div className="text-red-600 text-sm">
                       {formik.errors.description}

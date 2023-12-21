@@ -9,7 +9,7 @@ function Prices() {
   const [productData, setProductData] = useState([]);
   let data = useRef([]);
 
-  // console.log(serverData);
+  console.log(productData, data);
 
   // PAGINATING
   const [currentPage, setCurrentPage] = useState(1);
@@ -137,19 +137,20 @@ function Prices() {
           })
           .catch((err) => console.log(err.message));
     });
-    data = [];
-    setProductData([]);
+
+    setProductData({ ...data });
   }
 
   if (!serverData || !pageCount) {
     return null;
   }
+  console.log(Object.keys(productData), "obj key");
 
   return (
     <>
       <div className="text-sm text-left w-full  sm:w-11/12 lg:w-5/6 sm:text-lg font-bold cursor-pointer py-2 px-4 mt-4 sm:mb-4 sm:mt-8 md:mt-16 ">
         <button
-          // disabled={Object.values(productData).newPrice < 2 ? true : false}
+          disabled={Object.keys(productData).length < 2 ? true : false}
           className="rounded-md bg-black text-white py-1 px-3 disabled:bg-[#cccccc] disabled:text-[#848484]"
           onClick={() => updateData()}
         >
