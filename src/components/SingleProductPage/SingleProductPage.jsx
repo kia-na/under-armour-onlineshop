@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { Carousel } from "flowbite-react";
-
+// import { Carousel } from "flowbite-react";
+import HTMLReactParser from "html-react-parser";
 function SingleProductPage() {
   const [productData, setProductData] = useState(null);
   const params = useParams();
@@ -16,7 +16,7 @@ function SingleProductPage() {
   }, [params.id]);
 
   console.log();
-  if (!productData || !productData.images[1]) return null;
+  if (!productData || !productData.images[0]) return null;
 
   console.log(productData, "page");
   return (
@@ -24,7 +24,11 @@ function SingleProductPage() {
       <div className="flex flex-col justify-between items-start w-[80%] md:flex-row md:w-[90%] md:gap-10 lg:w-[80%] lg:justify-center  gap-5 mx-auto mt-10 md:mt-16 xl:mt-28">
         <div className=" w-full md:w-auto flex justify-center items-center">
           <img
-            src={`http://localhost:8000/images/products/images/${productData.images[1]}`}
+            src={`http://localhost:8000/images/products/images/${
+              productData.images[1]
+                ? productData.images[1]
+                : productData.images[0]
+            }`}
             alt=""
             className="w-[20rem] md:w-[30rem] lg:w-[40rem] xl:w-[45rem]"
           />
@@ -77,7 +81,7 @@ function SingleProductPage() {
           <div className="border-b-[1px] border-gray-300 pb-5 flex flex-col gap-3 mt-2">
             <span className="font-bold">What's it do?</span>
             <p className="text-xs text-gray-700 text-justify">
-              {productData.description}
+              {HTMLReactParser(productData.description)}
             </p>
           </div>
           <div>

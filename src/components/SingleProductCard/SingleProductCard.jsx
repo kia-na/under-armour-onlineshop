@@ -16,7 +16,11 @@ function SingleProductCard(props) {
       <span className="mb-[5%]">
         <img
           src={`http://localhost:8000/images/products/images/${
-            hover ? props.images[0] : props.images[1]
+            hover
+              ? props.images[0]
+              : props.images[1]
+              ? props.images[1]
+              : props.images[0]
           }`}
           alt="shoe"
           className="w-full"

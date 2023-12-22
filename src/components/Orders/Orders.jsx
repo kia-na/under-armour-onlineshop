@@ -55,7 +55,7 @@ function Orders() {
     delivered !== null && getFilteredData();
 
     console.log("re rendered!!!!!!!!!!!!!!!!");
-  }, [currentPage, delivered, openModal]);
+  }, [currentPage, delivered, openModal, serverData]);
 
   //HANDLE ESC KEY PRESS FOR CLOSING MODAl
   function handleKeyPress(e) {
@@ -81,7 +81,7 @@ function Orders() {
       })
       .then((res) => console.log(res))
       .catch((err) => console.log(err.message))
-      .finally(setOpenModal(false));
+      .finally(setOpenModal(false), setCurrentPage(currentPage));
   }
 
   // if (!serverData || !pageCount) {

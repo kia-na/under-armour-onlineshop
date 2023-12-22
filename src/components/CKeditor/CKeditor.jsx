@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-// import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
 
 function Editor({ onChange, editorLoaded, name, value }) {
   const editorRef = useRef();
@@ -7,13 +6,13 @@ function Editor({ onChange, editorLoaded, name, value }) {
 
   useEffect(() => {
     editorRef.current = {
-      CKEditor: require("@ckeditor/ckeditor5-react"), // v3+
-      ClassicEditor: require("@ckeditor/ckeditor5-editor-classic/src/classiceditor"),
+      CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, // v3+
+      ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
     };
   }, []);
 
   return (
-    <div>
+    <>
       {editorLoaded ? (
         <CKEditor
           type=""
@@ -29,7 +28,7 @@ function Editor({ onChange, editorLoaded, name, value }) {
       ) : (
         <div>Editor loading</div>
       )}
-    </div>
+    </>
   );
 }
 

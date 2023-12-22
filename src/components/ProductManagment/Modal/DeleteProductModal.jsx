@@ -17,7 +17,7 @@ function DeleteProductModal({ openModal, setOpenModal, deleteItem }) {
       .delete(`http://localhost:8000/api/products/${deleteItem}`)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
-    setOpenModal(false);
+    setOpenModal((openModal) => !openModal);
   }
 
   return (

@@ -195,6 +195,7 @@ function Products() {
       )}
       {openAddModal && (
         <AddProductModal
+          setCurrentPage={setCurrentPage}
           openModal={openAddModal}
           setOpenModal={setOpenAddModal}
         />

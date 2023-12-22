@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useState, useRef } from "react";
 import { Pagination } from "flowbite-react";
-// let data = [];
+
 function Prices() {
   const [serverData, setServerData] = useState(null);
   const [pageCount, setPageCount] = useState(null);
   const [productData, setProductData] = useState([]);
   let data = useRef([]);
 
-  console.log(productData, data);
+  // console.log(productData, data);
 
   // PAGINATING
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +24,6 @@ function Prices() {
         );
 
         setServerData(response.data.data.products);
-        // console.log(serverData);
       } catch (err) {
         console.log(err.message);
       }
@@ -35,22 +34,17 @@ function Prices() {
     async function getPageCount() {
       let response = await axios(`http://localhost:8000/api/products`);
       setPageCount(response.data.total_pages);
-      // console.log(pageCount);
     }
     getPageCount();
   }, [currentPage, productData]);
 
   function handlePriceEdit(productId, priceEdit) {
-    // console.log(productId, priceEdit, inventoryEdit);
-    // productData[product._id]?.priceEdit
     data.current = productId;
-    // data[productId].priceEdit = priceEdit;
     data[productId] = {
       ...data[productId],
       priceEdit,
     };
     setProductData({ ...data });
-    // console.log(productData, data);
   }
   function handleInventoryEdit(productId, inventoryEdit) {
     data.current = productId;
@@ -58,15 +52,12 @@ function Prices() {
       ...data[productId],
       inventoryEdit,
     };
-    // data[productId].inventoryEdit = inventoryEdit;
 
     setProductData({ ...data });
-    // console.log(productData, data);
   }
 
   //HANDLE ESC KEY PRESS FOR CLOSING INPUT
   function priceEsc(id, key) {
-    // console.log(key);
     if (key === "Escape") {
       delete data[id]?.priceEdit;
       delete data[id]?.newPrice;
@@ -75,7 +66,6 @@ function Prices() {
       delete data[id];
     }
     setProductData({ ...data });
-    // console.log(data, "priceEsc");
   }
   function inventoryEsc(id, key) {
     if (key === "Escape") {
@@ -86,17 +76,13 @@ function Prices() {
       delete data[id];
     }
     setProductData({ ...data });
-    // console.log(data, "inventoryEsc");
   }
 
   console.log();
 
   function updateData() {
-    // console.log(productData, "UPDATE");
     const dataArr = [];
     for (const [id, value] of Object.entries(productData)) {
-      // console.log(key, value);
-      // dataArr[key] = value;
       dataArr.push({ id, ...value });
     }
 
@@ -114,8 +100,8 @@ function Prices() {
             if (Object.keys(data[product.id]).length === 0) {
               delete data[product.id];
             }
-            console.log("updated price", index);
-            console.log(data, "dataaaaaaaa");
+            // console.log("updated price", index);
+            // console.log(data, "dataaaaaaaa");
             setProductData({ ...data });
           })
           .catch((err) => console.log(err.message));
@@ -144,7 +130,6 @@ function Prices() {
   if (!serverData || !pageCount) {
     return null;
   }
-  console.log(Object.keys(productData), "obj key");
 
   return (
     <>

@@ -7,7 +7,7 @@ import {
 } from "../../Product/dataConversion";
 import * as Yup from "yup";
 import axios from "axios";
-import CKeditor from "../../CKeditor/CKeditor";
+import Editor from "../../CKeditor/CKeditor";
 
 //FORMIK VALIDATION
 const validationSchema = Yup.object({
@@ -18,12 +18,10 @@ const validationSchema = Yup.object({
     .positive("Price must be positive")
     .required("price is required!"),
   quantity: Yup.number().positive().integer().required("Quantity is required!"),
-  description: Yup.string().required("Description is required!"),
-  // images: Yup.string().required("Images is required!"),
-  // thumbnail: Yup.string().required("Thumbnail is required!"),
+  // description: Yup.string().required("Description is required!"),
 });
 
-function AddProductModal({ openModal, setOpenModal }) {
+function AddProductModal({ openModal, setOpenModal, setCurrentPage }) {
   const [category, setCategory] = useState("men");
 
   const [thumbnail, setThumbnail] = useState(null);
@@ -44,7 +42,6 @@ function AddProductModal({ openModal, setOpenModal }) {
       subcategory: "",
       price: "",
       quantity: "",
-      description: "",
     },
     onSubmit: addProductToServer,
     validationSchema,
@@ -57,6 +54,9 @@ function AddProductModal({ openModal, setOpenModal }) {
     values.subcategory = subCategory_nameToNumber[category][values.subcategory];
     values.brand = "under armour";
 
+    delete values.description;
+    console.log("this is add");
+
     const formData = new FormData();
     Object.keys(values).forEach((key) => formData.append(key, values[key]));
 
@@ -65,7 +65,13 @@ function AddProductModal({ openModal, setOpenModal }) {
     images.forEach((image) => {
       formData.append("images", image);
     });
-    // formData.append("images", images);
+    formData.append("description", JSON.stringify(data));
+
+    // console.log(typeof JSON.stringify(data));
+
+    // for (var key of formData.entries()) {
+    //   console.log(key[0] + ", " + key[1]);
+    // }
 
     axios({
       url: "http://localhost:8000/api/products",
@@ -77,14 +83,13 @@ function AddProductModal({ openModal, setOpenModal }) {
     })
       .then((res) => console.log(res.message, "h"))
       .catch((err) => console.log(err.message))
-      .finally(setOpenModal(false));
-
-    for (var key of formData.entries()) {
-      console.log(key[0] + ", " + key[1]);
-    }
+      .finally(
+        setOpenModal((openModal) => !openModal),
+        setCurrentPage(1)
+      );
   }
-  console.log(thumbnail, "thumbnail");
-  console.log(images, "images");
+  // console.log(thumbnail, "thumbnail");
+  // console.log(images, "images");
   //HANDLE ESC KEY PRESS FOR CLOSING MODAl
   function handleKeyPress(e) {
     if (e.key === "Escape") {
@@ -92,11 +97,12 @@ function AddProductModal({ openModal, setOpenModal }) {
     }
   }
 
+  // console.log(JSON.stringify(data));
   return (
     <>
       <Modal
         show={openModal}
-        size="lg"
+        size="3xl"
         onClose={() => setOpenModal(false)}
         onKeyDown={handleKeyPress}
       >
@@ -270,28 +276,28 @@ function AddProductModal({ openModal, setOpenModal }) {
               <div className="w-full">
                 <label className="flex flex-col items-start justify-center gap-1">
                   <span className="font-bold text-sm">Description:*</span>
-
-                  <textarea
+                  {/* <textarea
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     value={formik.values.description}
                     name="description"
                     className="w-full h-[8rem] bg-inherit border-[1px] border-gray-300 rounded-md text-gray-500 px-4 py-2"
-                  ></textarea>
-                  {/* <CKeditor
-                    className="w-[5rem] bg-red-300"
+                  ></textarea> */}
+                  <Editor
                     name="description"
                     onChange={(data) => {
                       setData(data);
                     }}
                     editorLoaded={editorLoaded}
+                    onBlur={formik.handleBlur}
+                    // value={formik.values.description}
                   />
-                  {JSON.stringify(data)} */}
-                  {formik.errors.description && formik.touched.description && (
+
+                  {/* {formik.errors.description && formik.touched.description && (
                     <div className="text-red-600 text-sm">
                       {formik.errors.description}
                     </div>
-                  )}
+                  )} */}
                 </label>
               </div>
               <div className="flex justify-center">

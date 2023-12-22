@@ -35,6 +35,7 @@ function ProductsCardSubCategory({ category, subcategory }) {
         .catch((err) => console.log(err.message));
     }
     getData();
+    console.log(data);
   }, [currentPage, subcategory]);
 
   return (
