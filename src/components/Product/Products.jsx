@@ -184,6 +184,7 @@ function Products() {
           openModal={openModal}
           setOpenModal={setOpenModal}
           deleteItem={deleteItem}
+          setCurrentPage={setCurrentPage}
         />
       )}
       {openEditModal && (
@@ -191,6 +192,7 @@ function Products() {
           openModal={setOpenEditModal}
           setOpenModal={setOpenEditModal}
           editItemId={editItem}
+          setCurrentPage={setCurrentPage}
         />
       )}
       {openAddModal && (

@@ -2,7 +2,12 @@ import React from "react";
 import { Modal, Button } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import axios from "axios";
-function DeleteProductModal({ openModal, setOpenModal, deleteItem }) {
+function DeleteProductModal({
+  openModal,
+  setOpenModal,
+  deleteItem,
+  setCurrentPage,
+}) {
   //HANDLE ESC KEY PRESS FOR CLOSING MODAl
   function handleKeyPress(e) {
     if (e.key === "Escape") {
@@ -17,7 +22,9 @@ function DeleteProductModal({ openModal, setOpenModal, deleteItem }) {
       .delete(`http://localhost:8000/api/products/${deleteItem}`)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
+
     setOpenModal((openModal) => !openModal);
+    setCurrentPage(1);
   }
 
   return (

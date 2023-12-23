@@ -7,8 +7,8 @@ import {
 } from "../../Product/dataConversion";
 import * as Yup from "yup";
 import axios from "axios";
-// import Editor from "../../CKeditor/CKeditor";
-// import HTMLReactParser, { htmlparser2 } from "html-react-parser";
+import Editor from "../../CKeditor/CKeditor";
+import HTMLReactParser from "html-react-parser";
 
 //FORMIK VALIDATION
 const validationSchema = Yup.object({
@@ -21,11 +21,16 @@ const validationSchema = Yup.object({
   images: Yup.string(),
 });
 
-function EditProductModal({ openModal, setOpenModal, editItemId }) {
+function EditProductModal({
+  openModal,
+  setOpenModal,
+  editItemId,
+  setCurrentPage,
+}) {
   const [category, setCategory] = useState("men");
   const [defaultValue, setDefaultValue] = useState(null);
 
-  // const [editorLoaded, setEditorLoaded] = useState(false);
+  const [editorLoaded, setEditorLoaded] = useState(false);
   const [data, setData] = useState("");
 
   useEffect(() => {
@@ -39,9 +44,10 @@ function EditProductModal({ openModal, setOpenModal, editItemId }) {
     // console.log(defaultValue);
   }, [editItemId]);
 
-  // useEffect(() => {
-  //   setTimeout(setEditorLoaded(true), 1000);
-  // }, []);
+  useEffect(() => {
+    setEditorLoaded(true);
+    setData(defaultValue?.description);
+  }, []);
 
   //FORMIK
   const formik = useFormik({
@@ -70,7 +76,7 @@ function EditProductModal({ openModal, setOpenModal, editItemId }) {
         values.subcategory =
           subCategory_nameToNumber[category][values.subcategory];
     }
-    values["description"] = JSON.stringify(data);
+    if (data) values["description"] = JSON.stringify(data);
     console.log(values, "vvvvv");
 
     axios({
@@ -83,7 +89,7 @@ function EditProductModal({ openModal, setOpenModal, editItemId }) {
     })
       .then((res) => console.log(res.message, "h"))
       .catch((err) => console.log(err.message))
-      .finally(setOpenModal(false));
+      .finally(setOpenModal(false), setCurrentPage(1));
   }
 
   //HANDLE ESC KEY PRESS FOR CLOSING MODAl
@@ -92,7 +98,7 @@ function EditProductModal({ openModal, setOpenModal, editItemId }) {
       setOpenModal((openModal) => !openModal);
     }
   }
-  // console.log(defaultValue.description);
+  console.log(defaultValue);
 
   if (!defaultValue) {
     return null;
@@ -202,7 +208,10 @@ function EditProductModal({ openModal, setOpenModal, editItemId }) {
                         <option
                           key={index}
                           value={SCategory}
-                          selected={defaultValue.subcategory.name === SCategory}
+                          selected={
+                            defaultValue.subcategory.name.split(" ")[0] ===
+                            SCategory
+                          }
                         >
                           {SCategory}
                         </option>
@@ -270,7 +279,7 @@ function EditProductModal({ openModal, setOpenModal, editItemId }) {
                     name="description"
                     className="w-full h-[8rem] bg-inherit border-[1px] border-gray-300 rounded-md text-gray-500 px-4 py-2"
                   >
-                    {/* <span> {HTMLReactParser(defaultValue.description)}</span> */}
+                    {/* <p> {HTMLReactParser(defaultValue.description)}</p> */}
                   </textarea>
 
                   {/* <Editor
@@ -279,7 +288,7 @@ function EditProductModal({ openModal, setOpenModal, editItemId }) {
                       setData(data);
                     }}
                     editorLoaded={editorLoaded}
-                    defaultValue={defaultValue.description}
+                    // defaultValue={defaultValue.description}
                     // onBlur={formik.handleBlur}
                   /> */}
                   {/* <Editor
