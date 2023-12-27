@@ -1,11 +1,18 @@
-import React, { useState } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import AppRoutes from "../../router/routes";
-
+import { Navigate } from "react-router-dom";
 function AdminPanel() {
   const [active, setActive] = useState("orders");
+  const navigate = useNavigate();
+
+  //CASE REFRESH THE PAGE BACK TO DEFAULT RENDER SECTION (ORDERS)
+  useEffect(() => {
+    navigate(`${AppRoutes.HOME}${AppRoutes.ADMINPANEL}`);
+  }, []);
+
   return (
-    <div className="h-screen p-5 flex flex-col justify-start items-center bg-light-bg sm:pt-10 lg:pt-16">
+    <div className="h-screen p-5 flex flex-col justify-start items-center bg-[#f0f0f0] sm:pt-10 lg:pt-16">
       <div className=" flex justify-between items-center p-2 w-5/6">
         <span className="h-[1rem] font-bold flex items-center justify-between w-full gap-2">
           <Link
@@ -28,14 +35,14 @@ function AdminPanel() {
               <span className="lg:text-2xl">Home</span>
             </span>
           </Link>
-          <span className="text-xs sm:text-xl"> ADMIN PANEL</span>
+          <span className="text-xs text-black sm:text-xl"> ADMIN PANEL</span>
         </span>
       </div>
-      <div className="p-5 sm:mt-2 md:mt-3 text-[.8rem] sm:text-[1rem] sm:p-7 h-[1rem] font-bold text-secondary bg-primary w-full lg:w-11/12 h-1/10 rounded-xl md:text-xl md:rounded-[1rem] md:p-9 lg:p-12 lg:text-2xl shadow-form-sm md:shadow-form gap-4 flex justify-around items-center">
+      <div className="p-5 sm:mt-2 md:mt-3 text-[.8rem] sm:text-[1rem] sm:p-7 h-[1rem] font-bold text-[#fff] bg-black w-full lg:w-11/12 h-1/10 rounded-xl md:text-xl md:rounded-[1rem] md:p-9 lg:p-12 lg:text-2xl shadow-form-sm md:shadow-form gap-4 flex justify-around items-center">
         <NavLink
           to={`${AppRoutes.HOME}${AppRoutes.ADMINPANEL}${AppRoutes.ORDERS}`}
           onClick={() => setActive("orders")}
-          className={`cursor-pointer ${
+          className={`cursor-pointer  ${
             active === "orders" ? "border-b-2" : ""
           }`}
         >

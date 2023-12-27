@@ -3,14 +3,14 @@ import AppRoutes from "../../router/routes";
 
 function Header({ setOpenSideBar }) {
   return (
-    <div className="flex items-center justify-between gap-1 h-20 px-2 bg-primary md:px-5 lg:px-8 xl:px-10">
+    <div className="fixed z-[1000] m w-full flex items-center justify-between gap-1 h-20 px-2 bg-black  md:px-5 lg:px-8 xl:px-10">
       <div className="flex gap-6 items-center justify-between lg:gap-10">
         <span
           className="text-secondary cursor-pointer"
           onClick={() => setOpenSideBar((prev) => !prev)}
         >
           <svg
-            className="w-5 h-5 inline lg:w-8 lg:h-8"
+            className="w-5 h-5 inline lg:w-8 lg:h-8 text-white"
             xmlns="http://www.w3.org/2000/svg"
             width="512"
             height="512"
@@ -25,7 +25,7 @@ function Header({ setOpenSideBar }) {
         <span>
           <Link to={AppRoutes.HOME}>
             <svg
-              className="text-secondary lg:w-8 lg:h-8"
+              className="text-white lg:w-8 lg:h-8"
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
@@ -39,13 +39,13 @@ function Header({ setOpenSideBar }) {
           </Link>
         </span>
       </div>
-      <div className="flex gap-5 items-center justify-between md:gap-8  lg:gap-10">
+      <div className="flex gap-5 items-center justify-between md:gap-8 lg:gap-10">
         <Link
           to={`${AppRoutes.HOME}${AppRoutes.LOGINFORM}`}
           className="underline cursor-pointer "
         >
           <svg
-            className="w-7 h-7 text-secondary lg:w-8 lg:h-8"
+            className="w-7 h-7 text-white lg:w-8 lg:h-8"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -62,7 +62,7 @@ function Header({ setOpenSideBar }) {
           className="underline cursor-pointer"
         >
           <svg
-            className="w-6 h-6 text-secondary lg:w-8 lg:h-8"
+            className="w-6 h-6 text-white lg:w-8 lg:h-8"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
