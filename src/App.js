@@ -12,10 +12,12 @@ import Favorites from "./components/Favorites/Favorites";
 import ProductsCardSubCategory from "./components/ProductsCard/ProductsCardSubCategory";
 import ProductsCard from "./components/ProductsSection/ProductsCard";
 import SingleProductPage from "./components/SingleProductPage/SingleProductPage";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 function App() {
   return (
-    <div className="App">
+    <Provider store={store}>
       <Routes>
         <Route path="/" element={<Navigate to="underarmour" />} />
 
@@ -44,7 +46,7 @@ function App() {
           <Route path="login-form" element={<LoginForm />} />
         </Route>
       </Routes>
-    </div>
+    </Provider>
   );
 }
 

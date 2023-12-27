@@ -2,12 +2,17 @@ import React from "react";
 import { Modal, Button } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { deleteAsyncProduct } from "../../../redux/features/product/productSlice";
 function DeleteProductModal({
   openModal,
   setOpenModal,
   deleteItem,
   setCurrentPage,
+  currentPage,
 }) {
+  const dispatch = useDispatch();
+
   //HANDLE ESC KEY PRESS FOR CLOSING MODAl
   function handleKeyPress(e) {
     if (e.key === "Escape") {
@@ -17,14 +22,14 @@ function DeleteProductModal({
 
   //DELETE PRODUCT FROM SERVER
   function handleDelete() {
-    console.log("deleted item?");
-    axios
-      .delete(`http://localhost:8000/api/products/${deleteItem}`)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    dispatch(deleteAsyncProduct({ id: deleteItem }));
+    // axios
+    //   .delete(`http://localhost:8000/api/products/${deleteItem}`)
+    //   .then((res) => console.log(res))
+    //   .catch((err) => console.log(err));
 
     setOpenModal((openModal) => !openModal);
-    setCurrentPage(1);
+    setCurrentPage(currentPage);
   }
 
   return (

@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Pagination, Button, Modal } from "flowbite-react";
 import { userName } from "../Product/dataConversion";
 import OrderModalTable from "../OrderModalTable/OrderTable";
+import { useDispatch, useSelector } from "react-redux";
+import { getAsyncOrders } from "../../redux/features/order/orderSlice";
 
 function Orders() {
   const [serverData, setServerData] = useState(null);
@@ -16,46 +18,40 @@ function Orders() {
   const [currentPage, setCurrentPage] = useState(1);
   const onPageChange = (page) => setCurrentPage(page);
 
+  const { data } = useSelector((state) => state.orders);
+  const dispatch = useDispatch();
   useEffect(() => {
     //GET TABLE PRODUCT
-    async function getData() {
-      try {
-        let response = await axios(
-          `http://localhost:8000/api/orders?page=${currentPage}&limit=5`
-        );
+    if (delivered === null) {
+      dispatch(getAsyncOrders());
+      // setPageCount(data.total_pages);
 
-        setServerData(response.data.data.orders);
-        // console.log(response);
-      } catch (err) {
-        console.log(err.message);
-      }
+      dispatch(getAsyncOrders({ currentPage, limit: 5 }));
+      // setServerData(data?.data?.orders);
+      console.log(data);
     }
-    delivered === null && getData();
-
-    //GET DATA FOR TABLE PAGINATING
-    async function getPageCount() {
-      try {
-        let response = await axios(`http://localhost:8000/api/orders`);
-        setPageCount(response.data.total_pages);
-      } catch (err) {
-        console.log(err.message);
-      }
-    }
-    delivered === null && getPageCount();
 
     // GET DATA BY CLICK ON INPUTS
-    async function getFilteredData() {
-      const response = await axios(
-        `http://localhost:8000/api/orders?deliveryStatus=${delivered}&page=${currentPage}&limit=5`
-      );
-      // console.log(response.data.data.orders);
-      setServerData(response.data.data.orders);
-      setPageCount(response.data.total_pages);
+    if (delivered !== null) {
+      dispatch(getAsyncOrders({ delivered, currentPage, limit: 5 }));
     }
-    delivered !== null && getFilteredData();
 
-    console.log("re rendered!!!!!!!!!!!!!!!!");
-  }, [currentPage, delivered, openModal, serverData]);
+    setServerData(data.data?.orders);
+    setPageCount(data.total_pages);
+
+    // async function getFilteredData() {
+    //   const response = await axios(
+    //     `http://localhost:8000/api/orders?deliveryStatus=${delivered}&page=${currentPage}&limit=5`
+    //   );
+    //   // console.log(response.data.data.orders);
+    //   setServerData(response.data.data.orders);
+    //   setPageCount(response.data.total_pages);
+    // }
+    // delivered !== null && getFilteredData();
+
+    console.log(delivered, currentPage, data, "in");
+  }, [currentPage, delivered, openModal]);
+  console.log(delivered, currentPage, data, "out");
 
   //HANDLE ESC KEY PRESS FOR CLOSING MODAl
   function handleKeyPress(e) {
@@ -115,7 +111,7 @@ function Orders() {
       <div className="overflow-x-scroll h-3/6 w-full md:w-11/12 lg:w-5/6">
         {serverData && pageCount ? (
           <table className="min-w-full text-left text-sm font-light lg:text-lg">
-            <thead className="border-b font-medium dark:border-neutral-500">
+            <thead className="border-b font-medium dark:border-neutral-500 text-black">
               <tr>
                 <th scope="col" className="px-6 py-5">
                   Name
@@ -137,7 +133,7 @@ function Orders() {
                   className="border-b dark:border-neutral-500 "
                   key={order._id}
                 >
-                  <td className="whitespace-nowrap px-6 font-medium">
+                  <td className="whitespace-nowrap px-6 font-medium text-black">
                     {userName[order.user]}
                   </td>
                   <td className="min-w-[9rem] whitespace-nowrap px-6 py-5">
@@ -150,7 +146,7 @@ function Orders() {
                   <td className="min-w-[9rem] whitespace-nowrap px-6 py-5 text-center ">
                     <svg
                       onClick={() => handleShowModal(order._id)}
-                      className="inline lg:w-8 lg:h-8 cursor-pointer"
+                      className="inline lg:w-8 lg:h-8 cursor-pointer text-black"
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
                       height="24"

@@ -8,6 +8,8 @@ import {
 import * as Yup from "yup";
 import axios from "axios";
 import Editor from "../../CKeditor/CKeditor";
+import { useDispatch } from "react-redux";
+import { addAsyncProduct } from "../../../redux/features/product/productSlice";
 
 //FORMIK VALIDATION
 const validationSchema = Yup.object({
@@ -21,7 +23,12 @@ const validationSchema = Yup.object({
   // description: Yup.string().required("Description is required!"),
 });
 
-function AddProductModal({ openModal, setOpenModal, setCurrentPage }) {
+function AddProductModal({
+  openModal,
+  setOpenModal,
+  setCurrentPage,
+  currentPage,
+}) {
   const [category, setCategory] = useState("men");
 
   const [thumbnail, setThumbnail] = useState(null);
@@ -47,6 +54,7 @@ function AddProductModal({ openModal, setOpenModal, setCurrentPage }) {
     validationSchema,
   });
 
+  const dispatch = useDispatch();
   //ON SUBMIT : SENDING NEW PRODUCT DATA TO SERVER
   function addProductToServer(values) {
     //CHANGE TO ID READABLE BY SERVER
@@ -67,29 +75,15 @@ function AddProductModal({ openModal, setOpenModal, setCurrentPage }) {
     });
     formData.append("description", JSON.stringify(data));
 
-    // console.log(typeof JSON.stringify(data));
-
     // for (var key of formData.entries()) {
     //   console.log(key[0] + ", " + key[1]);
     // }
 
-    axios({
-      url: "http://localhost:8000/api/products",
-      method: "POST",
-      data: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-      .then((res) => console.log(res.message, "h"))
-      .catch((err) => console.log(err.message))
-      .finally(
-        setOpenModal((openModal) => !openModal),
-        setCurrentPage(1)
-      );
+    dispatch(addAsyncProduct({ data: formData }));
+    setOpenModal((openModal) => !openModal);
+    setCurrentPage(currentPage);
   }
-  // console.log(thumbnail, "thumbnail");
-  // console.log(images, "images");
+
   //HANDLE ESC KEY PRESS FOR CLOSING MODAl
   function handleKeyPress(e) {
     if (e.key === "Escape") {
