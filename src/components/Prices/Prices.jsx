@@ -144,7 +144,7 @@ function Prices() {
       </div>
       <div className="overflow-x-scroll h-3/6 w-full md:w-11/12 lg:w-5/6 ">
         <table className="min-w-full text-left text-sm font-light lg:text-lg">
-          <thead className="border-b font-medium dark:border-neutral-500">
+          <thead className="border-b font-medium dark:border-neutral-500 text-black">
             <tr>
               <th scope="col" className="px-6 py-5">
                 Name
@@ -163,7 +163,9 @@ function Prices() {
                 className="border-b dark:border-neutral-500 "
                 key={product._id}
               >
-                <td className="whitespace-nowrap px-6 py-5">{product.name}</td>
+                <td className="whitespace-nowrap px-6 py-5 text-black">
+                  {product.name}
+                </td>
 
                 <td className="whitespace-nowrap px-6 py-5 text-center">
                   {productData[product._id]?.priceEdit ? (

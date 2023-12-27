@@ -84,7 +84,7 @@ function SideBar({ openSideBar, setOpenSideBar }) {
         <div className="flex items-center justify-center border-b-[1px] border-black">
           <span>
             <svg
-              className="w-[2.5rem] h-[2.5rem]"
+              className="w-[2.5rem] h-[2.5rem] text-black"
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
@@ -107,7 +107,7 @@ function SideBar({ openSideBar, setOpenSideBar }) {
                 <Link
                   to={category.URL}
                   onClick={() => setOpenSideBar(false)}
-                  className="font-bold lg:text-lg w-[90%] text-left"
+                  className="font-bold lg:text-lg w-[90%] text-left text-black"
                 >
                   {category.title}
                 </Link>

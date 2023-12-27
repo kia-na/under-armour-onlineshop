@@ -16,14 +16,17 @@ module.exports = {
       },
     },
     colors: {
-      primary: "#000",
-      secondary: "#fff",
-      tertiary: "rgb(24 24 27)",
-      "tertiary-text": " rgb(156 163 175)",
-      "light-bg": "#f0f0f0",
-      accent: "#fde047",
-      red: "#b91c1c",
+      // primary: "#000",
+      // secondary: "#fff",
+      // tertiary: "rgb(24 24 27)",
+      // "tertiary-text": " rgb(156 163 175)",
+      // "light-bg": "#f0f0f0",
+      // accent: "#fde047",
+      // red: "#b91c1c",
     },
   },
-  plugins: [require("flowbite/plugin")],
+  plugins: [require("flowbite/plugin"), require(getDaisyUI())],
 };
+function getDaisyUI() {
+  return "daisyui";
+}
