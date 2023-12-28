@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import AppRoutes from "../../router/routes";
+import { useSelector } from "react-redux";
 
 function Header({ setOpenSideBar }) {
+  const { carts } = useSelector((state) => state.cart);
+  console.log(carts);
   return (
     <div className="fixed z-[1000] m w-full flex items-center justify-between gap-1 h-20 px-2 bg-black  md:px-5 lg:px-8 xl:px-10">
       <div className="flex gap-6 items-center justify-between lg:gap-10">
@@ -59,8 +62,11 @@ function Header({ setOpenSideBar }) {
         </Link>
         <Link
           to={`${AppRoutes.HOME}${AppRoutes.CART}`}
-          className="underline cursor-pointer"
+          className="underline cursor-pointer relative"
         >
+          <span className="bg-red-600 text-white text-[.5rem] rounded-full w-4 h-4 flex items-center justify-center absolute bottom-5 right-[-.04rem]">
+            {carts.length}
+          </span>
           <svg
             className="w-6 h-6 text-white lg:w-8 lg:h-8"
             xmlns="http://www.w3.org/2000/svg"

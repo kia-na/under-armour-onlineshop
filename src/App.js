@@ -14,6 +14,8 @@ import ProductsCard from "./components/ProductsSection/ProductsCard";
 import SingleProductPage from "./components/SingleProductPage/SingleProductPage";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import Checkout from "./components/Checkout/Checkout";
+import PaymentResult from "./components/PaymentResult/PaymentResult";
 
 function App() {
   return (
@@ -25,6 +27,11 @@ function App() {
           <Route element={<Home />}>
             <Route index element={<ProductsCard />} />
             <Route path="cart" element={<Cart />} />
+            <Route path="payment">
+              <Route path=":pay" element={<PaymentResult />} />
+            </Route>
+
+            <Route path="checkout" element={<Checkout />} />
             <Route path="favorites" element={<Favorites />} />
             <Route path=":gender" element={<ProductsCard />}>
               <Route path=":field" element={<ProductsCardSubCategory />} />

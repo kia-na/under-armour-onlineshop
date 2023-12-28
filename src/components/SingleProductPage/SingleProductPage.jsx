@@ -4,8 +4,12 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 // import { Carousel } from "flowbite-react";
 import HTMLReactParser from "html-react-parser";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/features/cart/cartSlice";
 function SingleProductPage() {
   const [productData, setProductData] = useState(null);
+  const [count, setCount] = useState(1);
+
   const params = useParams();
   // console.log();
 
@@ -15,7 +19,22 @@ function SingleProductPage() {
       .catch((err) => console.log(err.message));
   }, [params.id]);
 
-  console.log();
+  const dispatch = useDispatch();
+
+  function addToBag() {
+    dispatch(
+      addToCart({
+        name: productData.name,
+        price: productData.price,
+        productId: params.id,
+        quantity: +count,
+        thumbnail: productData.thumbnail,
+        maxQuantity: productData.quantity,
+      })
+    );
+  }
+
+  // console.log();
   if (!productData || !productData.images[0]) return null;
 
   console.log(productData, "page");
@@ -60,19 +79,24 @@ function SingleProductPage() {
                   Qty
                 </span>
                 <input
+                  // onBlur={(e) => }
                   type="number"
                   defaultValue={1}
                   min={1}
+                  onChange={(e) => setCount(e.target.value)}
                   max={productData.quantity}
                   onBlur={(e) =>
                     e.target.value > productData.quantity
                       ? (e.target.value = productData.quantity)
                       : null
                   }
-                  className="border-[1px] border-gray-300 bg-transparent rounded-md w-[4rem] "
+                  className="border-[1px] border-gray-300 text-black bg-transparent rounded-md w-[4rem] "
                 />
               </div>
-              <span className="bg-red-600 w-full py-[.8rem] rounded-md text-white text-center text-xs cursor-pointer">
+              <span
+                onClick={addToBag}
+                className="bg-red-600 w-full py-[.8rem] rounded-md text-white text-center text-xs cursor-pointer"
+              >
                 Add to Bag
               </span>
             </div>
