@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import HTMLReactParser from "html-react-parser";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/features/cart/cartSlice";
+import { Carousel } from "flowbite-react";
 function SingleProductPage() {
   const [productData, setProductData] = useState(null);
   const [count, setCount] = useState(1);
@@ -42,25 +43,23 @@ function SingleProductPage() {
     <>
       <div className="flex flex-col justify-between items-start w-[80%] md:flex-row md:w-[90%] md:gap-10 lg:w-[80%] lg:justify-center  gap-5 mx-auto mt-10 md:mt-16 xl:mt-28">
         <div className=" w-full md:w-auto flex justify-center items-center">
-          <img
-            src={`http://localhost:8000/images/products/images/${
-              productData.images[1]
-                ? productData.images[1]
-                : productData.images[0]
-            }`}
-            alt=""
-            className="w-[20rem] md:w-[30rem] lg:w-[40rem] xl:w-[45rem]"
-          />
-
           <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
+            <img
+              src={`http://localhost:8000/images/products/images/${
+                productData.images[1]
+                  ? productData.images[1]
+                  : productData.images[0]
+              }`}
+              alt=""
+              className="w-[20rem] md:w-[30rem] lg:w-[40rem] xl:w-[45rem]"
+            />
             {/* <Carousel>
-              {productData.images.map((pic, index) => (
+              {productData.images.map((img) => (
                 <img
-                  key={index}
-                  src={`http://localhost:8000/images/products/images/${pic}`}
+                  src={`http://localhost:8000/images/products/images/${img}`}
                   alt="..."
+                  className="w-[20rem] md:w-[30rem] lg:w-[40rem] xl:w-[45rem]"
                 />
-                
               ))}
             </Carousel> */}
           </div>

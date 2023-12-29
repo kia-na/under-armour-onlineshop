@@ -36,6 +36,7 @@ function Checkout() {
 
   function handleSubmitForm(values) {
     console.log(values);
+    window.location.assign("");
   }
 
   return (

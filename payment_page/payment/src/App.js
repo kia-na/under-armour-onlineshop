@@ -4,11 +4,7 @@ import Payment from "./page/Payment/Payment";
 function App() {
   return (
     <Routes>
-      <Route
-        path="http://localhost:3001/"
-        element={<Navigate to="payment" />}
-      />
-
+      <Route path="/" element={<Navigate to="payment" />} />
       <Route path="/payment" element={<Payment />} />
     </Routes>
   );

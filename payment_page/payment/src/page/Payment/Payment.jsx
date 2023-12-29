@@ -1,10 +1,11 @@
 import React from "react";
 import "./payment.css";
+
 function Payment() {
   function handlePay(p) {
     p === "payed"
       ? window.location.assign(
-          "http://localhost:3000/underarmour/payment/succes"
+          "http://localhost:3000/underarmour/payment/success"
         )
       : window.location.assign(
           "http://localhost:3000/underarmour/payment/fail"
@@ -18,8 +19,8 @@ function Payment() {
           <span className="pay" onClick={() => handlePay("payed")}>
             Pay
           </span>
-          <span className="cancle" onClick={() => handlePay("cancled")}>
-            Cancle
+          <span className="Cancel" onClick={() => handlePay("Canceled")}>
+            Cancel
           </span>
         </div>
       </div>
