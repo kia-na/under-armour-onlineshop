@@ -34,7 +34,7 @@ img {
   width: 100%;
 }
 .pay,
-.cancle {
+.cancel {
   width: 100%;
   padding: 1rem 0;
   cursor: pointer;
@@ -47,7 +47,7 @@ img {
 .pay {
   background-color: #ffbb3a;
 }
-.cancle {
+.cancel {
   background-color: white;
   color: black;
   border: 1px solid black;

@@ -19,7 +19,7 @@ function Payment() {
           <span className="pay" onClick={() => handlePay("payed")}>
             Pay
           </span>
-          <span className="Cancel" onClick={() => handlePay("Canceled")}>
+          <span className="cancel" onClick={() => handlePay("Canceled")}>
             Cancel
           </span>
         </div>

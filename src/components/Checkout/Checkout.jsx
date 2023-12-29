@@ -35,8 +35,7 @@ function Checkout() {
   });
 
   function handleSubmitForm(values) {
-    console.log(values);
-    window.location.assign("");
+    window.location.assign("http://localhost:3001/payment");
   }
 
   return (
