@@ -20,38 +20,40 @@ function Orders() {
 
   const { data } = useSelector((state) => state.orders);
   const dispatch = useDispatch();
+
+  function getData() {
+    dispatch(getAsyncOrders());
+    setPageCount(data.total_pages);
+
+    dispatch(getAsyncOrders({ currentPage, limit: 5 }));
+    setServerData(data?.data?.orders);
+    console.log(data);
+  }
   useEffect(() => {
     //GET TABLE PRODUCT
     if (delivered === null) {
-      dispatch(getAsyncOrders());
-      // setPageCount(data.total_pages);
-
-      dispatch(getAsyncOrders({ currentPage, limit: 5 }));
-      // setServerData(data?.data?.orders);
-      console.log(data);
+      getData();
     }
+  }, []);
 
+  useEffect(() => {
     // GET DATA BY CLICK ON INPUTS
-    if (delivered !== null) {
-      dispatch(getAsyncOrders({ delivered, currentPage, limit: 5 }));
-    }
-
-    setServerData(data.data?.orders);
-    setPageCount(data.total_pages);
-
-    // async function getFilteredData() {
-    //   const response = await axios(
-    //     `http://localhost:8000/api/orders?deliveryStatus=${delivered}&page=${currentPage}&limit=5`
-    //   );
-    //   // console.log(response.data.data.orders);
-    //   setServerData(response.data.data.orders);
-    //   setPageCount(response.data.total_pages);
+    // if (delivered !== null) {
+    //   dispatch(getAsyncOrders({ delivered, currentPage, limit: 5 }));
+    //   setServerData(data.data?.orders);
+    //   setPageCount(data.total_pages);
     // }
-    // delivered !== null && getFilteredData();
 
-    console.log(delivered, currentPage, data, "in");
-  }, [currentPage, delivered, openModal]);
-  console.log(delivered, currentPage, data, "out");
+    async function getFilteredData() {
+      const response = await axios(
+        `http://localhost:8000/api/orders?deliveryStatus=${delivered}&page=${currentPage}&limit=5`
+      );
+      // console.log(response.data.data.orders);
+      setServerData(response.data.data.orders);
+      setPageCount(response.data.total_pages);
+    }
+    delivered !== null && getFilteredData();
+  }, [currentPage, delivered]);
 
   //HANDLE ESC KEY PRESS FOR CLOSING MODAl
   function handleKeyPress(e) {
@@ -63,9 +65,10 @@ function Orders() {
   //HANDLE GET DATA TO FILL OUT MODAL
   function handleShowModal(orderId) {
     setOpenModal(true);
+    // dispatch(getAsyncOrders({ id: orderId }));
+    // setModalData(data.data.orders);
     axios(`http://localhost:8000/api/orders/${orderId}`).then((res) => {
       setModalData(res.data.data.order);
-      // console.log(res.data.data.order);
     });
   }
 
@@ -77,12 +80,12 @@ function Orders() {
       })
       .then((res) => console.log(res))
       .catch((err) => console.log(err.message))
-      .finally(setOpenModal(false), setCurrentPage(currentPage));
-  }
+      .finally(setOpenModal(false));
 
-  // if (!serverData || !pageCount) {
-  //   return <div>No order found</div>;
-  // }
+    dispatch(getAsyncOrders({ currentPage, limit: 5 }));
+    setServerData(data?.data?.orders);
+    setCurrentPage(1);
+  }
 
   return (
     <>
@@ -95,7 +98,12 @@ function Orders() {
           }}
         >
           Delivered orders
-          <input type="radio" name="orders" value="delivered" />
+          <input
+            type="radio"
+            name="orders"
+            value="delivered"
+            defaultChecked={delivered === true ? true : false}
+          />
         </label>
         <label
           className="flex gap-2 items-center cursor-pointer"
@@ -105,7 +113,12 @@ function Orders() {
           }}
         >
           Pending orders
-          <input type="radio" name="orders" value="pending" />
+          <input
+            type="radio"
+            name="orders"
+            value="pending"
+            defaultChecked={delivered === false ? true : false}
+          />
         </label>
       </div>
       <div className="overflow-x-scroll h-3/6 w-full md:w-11/12 lg:w-5/6">

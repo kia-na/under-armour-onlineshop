@@ -1,7 +1,7 @@
 const AppRoutes = {
   HOME: "/underarmour",
   CART: "/cart",
-  CHECKOUT: "/Checkout",
+  CHECKOUT: "/checkout",
   FAVORITES: "/favorites",
   ADMINPANEL: "/admin-panel",
   ORDERS: "/orders",

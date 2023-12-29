@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useState, useRef } from "react";
 import { Pagination } from "flowbite-react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAsyncProducts } from "../../redux/features/product/productSlice";
 
 function Prices() {
   const [serverData, setServerData] = useState(null);
@@ -9,7 +11,8 @@ function Prices() {
   const [productData, setProductData] = useState([]);
   let data = useRef([]);
 
-  // console.log(productData, data);
+  const dispatch = useDispatch();
+  const pData = useSelector((state) => state.products);
 
   // PAGINATING
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,25 +20,29 @@ function Prices() {
 
   useEffect(() => {
     //GET TABLE PRODUCT
-    async function getData() {
-      try {
-        let response = await axios(
-          `http://localhost:8000/api/products?page=${currentPage}&limit=5`
-        );
+    dispatch(getAsyncProducts({ currentPage, limit: 5 }));
+    setServerData(pData.data.data?.products);
+    // async function getData() {
+    //   try {
+    //     let response = await axios(
+    //       `http://localhost:8000/api/products?page=${currentPage}&limit=5`
+    //     );
 
-        setServerData(response.data.data.products);
-      } catch (err) {
-        console.log(err.message);
-      }
-    }
-    getData();
+    //     setServerData(response.data.data.products);
+    //   } catch (err) {
+    //     console.log(err.message);
+    //   }
+    // }
+    // getData();
 
     //GET DATA FOR TABLE PAGINATING
-    async function getPageCount() {
-      let response = await axios(`http://localhost:8000/api/products`);
-      setPageCount(response.data.total_pages);
-    }
-    getPageCount();
+    dispatch(getAsyncProducts());
+    setPageCount(pData.data.total_pages);
+    // async function getPageCount() {
+    //   let response = await axios(`http://localhost:8000/api/products`);
+    //   setPageCount(response.data.total_pages);
+    // }
+    // getPageCount();
   }, [currentPage, productData]);
 
   function handlePriceEdit(productId, priceEdit) {

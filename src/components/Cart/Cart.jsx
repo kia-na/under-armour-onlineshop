@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+// import { deleteFromCart, editCart } from "../../redux/features/cart/cartSlice";
 import { deleteFromCart, editCart } from "../../redux/features/cart/cartSlice";
 import { Link } from "react-router-dom";
 import AppRoutes from "../../router/routes";
-import { date } from "yup";
 
 function Cart() {
   const [cartData, setCartData] = useState([]);

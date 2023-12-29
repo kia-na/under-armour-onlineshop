@@ -275,14 +275,15 @@ function EditProductModal({
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     // value={formik.values.description}
-                    defaultValue={defaultValue.description}
+                    // defaultValue={defaultValue.description}
                     name="description"
                     className="w-full h-[8rem] bg-inherit border-[1px] border-gray-300 rounded-md text-gray-500 px-4 py-2"
                   >
-                    {/* <p> {HTMLReactParser(defaultValue.description)}</p> */}
+                    {HTMLReactParser(defaultValue.description)}
                   </textarea>
 
-                  {/* <Editor
+                  {/* 
+                  <Editor
                     name="description"
                     onChange={(data) => {
                       setData(data);
@@ -291,14 +292,7 @@ function EditProductModal({
                     // defaultValue={defaultValue.description}
                     // onBlur={formik.handleBlur}
                   /> */}
-                  {/* <Editor
-                    name="description"
-                    onChange={(data) => {
-                      setData(data);
-                    }}
-                    editorLoaded={editorLoaded}
-                    onBlur={formik.handleBlur}
-                  /> */}
+
                   {formik.errors.description && (
                     <div className="text-red-600 text-sm">
                       {formik.errors.description}

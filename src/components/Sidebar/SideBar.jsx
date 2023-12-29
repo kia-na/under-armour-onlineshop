@@ -52,9 +52,9 @@ function SideBar({ openSideBar, setOpenSideBar }) {
   //     })
   //     .catch((err) => console.log(err.message));
 
-  // setCategories(cname);
+  //   setCategories(cname);
 
-  //GET ALL SUBCATEGORY
+  //   // GET ALL SUBCATEGORY
   //   let scname = [];
   //   axios("http://localhost:8000/api/subcategories")
   //     .then((res) => {
