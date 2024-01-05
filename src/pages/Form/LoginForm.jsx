@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import AppRoutes from "../../router/routes";
 import { useNavigate } from "react-router-dom";
@@ -10,8 +10,18 @@ function LoginForm() {
   const [userName, setUserName] = useState(null);
   const [password, setPassword] = useState(null);
 
-  // HANDLE SUBMIT FORM
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("refreshToken")) {
+      navigate(`${AppRoutes.HOME}${AppRoutes.ADMINPANEL}`, {
+        replace: true,
+      });
+    }
+  }, []);
+
+  // HANDLE SUBMIT FORM
+
   function handleSubmit(e) {
     e.preventDefault();
     console.log(userName, password);
@@ -20,13 +30,17 @@ function LoginForm() {
         username: userName,
         password: password,
       })
-      .then((res) =>
-        res.status === 200
-          ? navigate(`${AppRoutes.HOME}${AppRoutes.ADMINPANEL}`, {
-              replace: true,
-            })
-          : setFormErr("Username or Password is WRONG!")
-      )
+      .then((res) => {
+        if (res.status === 200) {
+          // console.log(res.data.token.refreshToken);
+          localStorage.setItem("refreshToken", res.data.token.refreshToken);
+          navigate(`${AppRoutes.HOME}${AppRoutes.ADMINPANEL}`, {
+            replace: true,
+          });
+        } else {
+          setFormErr("Username or Password is WRONG!");
+        }
+      })
       .catch((err) => setFormErr("Username or Password is WRONG!"));
   }
   // HANDLE SUBMIT FORM

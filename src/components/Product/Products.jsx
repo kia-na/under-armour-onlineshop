@@ -7,7 +7,7 @@ import DeleteProductModal from "../ProductManagment/Modal/DeleteProductModal";
 import EditProductModal from "../ProductManagment/Modal/EditProductModal";
 import AddProductModal from "../ProductManagment/Modal/AddProductModal";
 import { useDispatch, useSelector } from "react-redux";
-import { getAsyncProducts } from "../../redux/features/product/productSlice";
+// import { getAsyncProducts } from "../../redux/features/product/productSlice";
 import ProductsSkeleton from "./ProductsSkeleton";
 function Products() {
   const [serverData, setServerData] = useState(null);
@@ -27,20 +27,27 @@ function Products() {
   const [currentPage, setCurrentPage] = useState(1);
   const onPageChange = (page) => setCurrentPage(page);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   let { loading, data, error } = useSelector((state) => state.products);
   console.log(data, "dataaaaaaaaaaaa");
 
   useEffect(() => {
     //GET TABLE PRODUCT
-    dispatch(getAsyncProducts({ currentPage: currentPage, limit: 5 }));
+    axios(
+      `http://localhost:8000/api/products?page=${currentPage}&limit=5`
+    ).then((res) => setServerData(res.data.data.products));
+    // dispatch(getAsyncProducts({ currentPage: currentPage, limit: 5 }));
     // console.log(currentPage, "pageeee nowww");
-    setServerData(data.data?.products);
-    console.log(data, "then", currentPage);
+    // setServerData(data.data?.products);
 
     //GET DATA FOR TABLE PAGINATING
-    dispatch(getAsyncProducts());
-    if (data) setPageCount(data.total_pages);
+    // dispatch(getAsyncProducts());
+    axios
+      .get("http://localhost:8000/api/products")
+      .then((res) => setPageCount(res.data.total_pages))
+      .catch((err) => console.log(err));
+
+    // if (data) setPageCount(data.total_pages);
     console.log(pageCount);
   }, [currentPage, openModal, openEditModal, openAddModal]);
 

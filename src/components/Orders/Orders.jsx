@@ -22,11 +22,17 @@ function Orders() {
   const dispatch = useDispatch();
 
   function getData() {
-    dispatch(getAsyncOrders());
-    setPageCount(data.total_pages);
+    axios
+      .get("http://localhost:8000/api/orders")
+      .then((res) => setPageCount(res.data.total_pages));
+    // dispatch(getAsyncOrders());
+    // setPageCount(data.total_pages);
 
-    dispatch(getAsyncOrders({ currentPage, limit: 5 }));
-    setServerData(data?.data?.orders);
+    axios
+      .get(`http://localhost:8000/api/orders?page=${currentPage}&limit=5`)
+      .then((res) => setServerData(res.data.data.orders));
+    // dispatch(getAsyncOrders({ currentPage, limit: 5 }));
+    // setServerData(data?.data?.orders);
     console.log(data);
   }
   useEffect(() => {
@@ -34,7 +40,7 @@ function Orders() {
     if (delivered === null) {
       getData();
     }
-  }, []);
+  }, [currentPage]);
 
   useEffect(() => {
     // GET DATA BY CLICK ON INPUTS
@@ -65,8 +71,6 @@ function Orders() {
   //HANDLE GET DATA TO FILL OUT MODAL
   function handleShowModal(orderId) {
     setOpenModal(true);
-    // dispatch(getAsyncOrders({ id: orderId }));
-    // setModalData(data.data.orders);
     axios(`http://localhost:8000/api/orders/${orderId}`).then((res) => {
       setModalData(res.data.data.order);
     });
