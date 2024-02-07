@@ -29,7 +29,7 @@ function DeleteProductModal({
     //   .catch((err) => console.log(err));
 
     setOpenModal((openModal) => !openModal);
-    setCurrentPage(currentPage);
+    setCurrentPage((prev) => prev);
   }
 
   return (

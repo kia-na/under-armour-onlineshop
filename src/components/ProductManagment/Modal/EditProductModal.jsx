@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import Editor from "../../CKeditor/CKeditor";
 import HTMLReactParser from "html-react-parser";
+import { current } from "@reduxjs/toolkit";
 
 //FORMIK VALIDATION
 const validationSchema = Yup.object({
@@ -63,8 +64,6 @@ function EditProductModal({
     validationSchema,
   });
 
-  // console.log(defaultValue.subcategory.name);
-
   //ON SUBMIT : SENDING NEW PRODUCT DATA TO SERVER
   function updateServer(values) {
     for (let [key, value] of Object.entries(values)) {
@@ -87,10 +86,16 @@ function EditProductModal({
         "Content-Type": "multipart/form-data",
       },
     })
-      .then((res) => console.log(res.message, "h"))
-      .catch((err) => console.log(err.message))
-      .finally(setOpenModal(false), setCurrentPage(1));
+      .then((res) => {
+        console.log(res.message, "h");
+      })
+      .catch((err) => console.log(err.message));
+    setOpenModal((openModal) => !openModal);
+    setCurrentPage((prev) => prev);
   }
+
+  let convertedDesc = defaultValue?.description.replace(/<[^>]+>/g, "");
+  // console.log(defaultValue?.description);
 
   //HANDLE ESC KEY PRESS FOR CLOSING MODAl
   function handleKeyPress(e) {
@@ -275,14 +280,15 @@ function EditProductModal({
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     // value={formik.values.description}
-                    defaultValue={defaultValue.description}
+                    defaultValue={convertedDesc}
                     name="description"
                     className="w-full h-[8rem] bg-inherit border-[1px] border-gray-300 rounded-md text-gray-500 px-4 py-2"
                   >
-                    {/* <p> {HTMLReactParser(defaultValue.description)}</p> */}
+                    {/* {HTMLReactParser(defaultValue.description)} */}
                   </textarea>
 
-                  {/* <Editor
+                  {/* 
+                  <Editor
                     name="description"
                     onChange={(data) => {
                       setData(data);
@@ -291,14 +297,7 @@ function EditProductModal({
                     // defaultValue={defaultValue.description}
                     // onBlur={formik.handleBlur}
                   /> */}
-                  {/* <Editor
-                    name="description"
-                    onChange={(data) => {
-                      setData(data);
-                    }}
-                    editorLoaded={editorLoaded}
-                    onBlur={formik.handleBlur}
-                  /> */}
+
                   {formik.errors.description && (
                     <div className="text-red-600 text-sm">
                       {formik.errors.description}

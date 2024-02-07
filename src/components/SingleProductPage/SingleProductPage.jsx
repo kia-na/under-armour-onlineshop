@@ -6,10 +6,12 @@ import { useParams } from "react-router-dom";
 import HTMLReactParser from "html-react-parser";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/features/cart/cartSlice";
-import { Carousel } from "flowbite-react";
+import Carousel from "../Carousel/Carousel";
+import Toastify from "../Toast/Toast";
 function SingleProductPage() {
   const [productData, setProductData] = useState(null);
   const [count, setCount] = useState(1);
+  const [isShow, setIsShow] = useState(false);
 
   const params = useParams();
   // console.log();
@@ -33,6 +35,8 @@ function SingleProductPage() {
         maxQuantity: productData.quantity,
       })
     );
+    setIsShow(true);
+    setTimeout(() => setIsShow((isShow) => !isShow), 1200);
   }
 
   // console.log();
@@ -41,6 +45,7 @@ function SingleProductPage() {
   console.log(productData, "page");
   return (
     <>
+      <Toastify isShow={isShow} />
       <div className="flex flex-col justify-between items-start w-[80%] md:flex-row md:w-[90%] md:gap-10 lg:w-[80%] lg:justify-center  gap-5 mx-auto mt-10 md:mt-16 xl:mt-28">
         <div className=" w-full md:w-auto flex justify-center items-center">
           <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
@@ -53,6 +58,7 @@ function SingleProductPage() {
               alt=""
               className="w-[20rem] md:w-[30rem] lg:w-[40rem] xl:w-[45rem]"
             />
+            <Carousel images={productData.images} />
             {/* <Carousel>
               {productData.images.map((img) => (
                 <img

@@ -81,7 +81,9 @@ function AddProductModal({
 
     dispatch(addAsyncProduct({ data: formData }));
     setOpenModal((openModal) => !openModal);
-    setCurrentPage(currentPage);
+    axios
+      .get("http://localhost:8000/api/products")
+      .then((res) => setCurrentPage(res.data.total_pages));
   }
 
   //HANDLE ESC KEY PRESS FOR CLOSING MODAl

@@ -1,7 +1,7 @@
 import React from "react";
 
 function OrderModalTable({ data }) {
-  console.log(data, "table");
+  // console.log(data, "table");
   return (
     <>
       <div className="relative overflow-x-auto mt-4 md:mt-6 max-w-[30rem] mx-auto">

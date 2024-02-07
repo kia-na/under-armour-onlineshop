@@ -4,22 +4,30 @@ import { ORDERS_API } from "../../../API/URL";
 export const getAsyncOrders = createAsyncThunk(
   "order/getAsyncOrders",
   async (payload, { rejectWithValue }) => {
+    console.log(payload, "payload");
     try {
       if (payload.id) {
         const { data } = await axios.get(`${ORDERS_API}/${payload.id}`);
+        console.log("11111111");
         return data;
-      } else if (payload.delivered) {
+      } else if (
+        (payload.delivered === false || payload.delivered === true) &&
+        payload.limit
+      ) {
         const { data } = await axios.get(
           `${ORDERS_API}/?deliveryStatus=${payload.delivered}&page=${payload.currentPage}&limit=5`
         );
+        console.log("222222222");
         return data;
-      } else if (payload.currentPage) {
+      } else if (!payload.delivered && payload.currentPage) {
         const { data } = await axios.get(
           `${ORDERS_API}/?page=${payload.currentPage}&limit=5`
         );
+        console.log("3333333");
         return data;
       } else {
         const { data } = await axios.get(ORDERS_API);
+        console.log("4444444");
         return data;
       }
     } catch (error) {
